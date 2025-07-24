@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "883588472994",
+    "project_id": "money-transfer-23db8",
+    "storage_bucket": "money-transfer-23db8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883588472994:android:5e30f9bced12a62f0677fb",
+        "android_client_info": {
+          "package_name": "com.example.alfa_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883588472994-nppaorsm3vrseageevnm6qj7hkm63l8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU8tqIGgK6BKCtnLKvGp3Qn7Btf14qDws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883588472994-nppaorsm3vrseageevnm6qj7hkm63l8l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "883588472994-1qpjdaj092j4qrt912b3k5qn2c982thu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.moneyTransfer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883588472994:android:533a89ba493b1a960677fb",
+        "android_client_info": {
+          "package_name": "com.example.money_transfer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883588472994-nppaorsm3vrseageevnm6qj7hkm63l8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU8tqIGgK6BKCtnLKvGp3Qn7Btf14qDws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883588472994-nppaorsm3vrseageevnm6qj7hkm63l8l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "883588472994-1qpjdaj092j4qrt912b3k5qn2c982thu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.moneyTransfer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
