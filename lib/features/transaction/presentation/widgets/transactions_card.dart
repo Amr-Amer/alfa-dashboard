@@ -63,7 +63,7 @@ class TransactionsCard extends StatelessWidget {
                       buildHeaderCell(Icons.payment, AppStrings.transactionMethod, 1),     // Transaction Method
                       buildHeaderCell(Icons.info_outline, AppStrings.status, 1),      // Transaction Status
                       buildHeaderCell(Icons.account_balance_wallet, AppStrings.transactionAmount, 1),    // Transaction Amount
-                      buildHeaderCell(Icons.note_alt_outlined, AppStrings.transactionNotes, 1),     // Transaction Notes
+                      // buildHeaderCell(Icons.note_alt_outlined, AppStrings.transactionNotes, 1),     // Transaction Notes
                       buildHeaderCell(Icons.note_alt_outlined, AppStrings.adminNotes, 1),     // Transaction Notes
                       buildHeaderCell(Icons.av_timer_rounded, AppStrings.transactionTime, 1), // Transaction Time
                     ],
@@ -96,8 +96,8 @@ class TransactionsCard extends StatelessWidget {
             },
             child: AnimatedContainer(
               duration: Duration(milliseconds: 200),
-              color: isHovered ? AppConstants.clrGradient2 : const Color(0xFF131D1F),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              color: isHovered ? AppConstants.clrGradient3 : const Color(0xFF131D1F),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
               child: Row(
                 children: [
                   buildDetailsCell(transaction.id, 1),
@@ -106,7 +106,7 @@ class TransactionsCard extends StatelessWidget {
                   buildDetailsCell(GlobalFun.getMethodAr(transaction.method), 1),
                   buildDetailsCell(GlobalFun.getStatusAr(transaction.status), 1),
                   buildDetailsCell('${transaction.amount}  ${GlobalFun.getCurrencyAr(transaction.currency)}',1),
-                  buildDetailsCell(transaction.note, 1),
+                  // buildDetailsCell(transaction.note, 1),
                   buildDetailsCell(transaction.adminNote, 1),
                   buildDetailsCell(GlobalFun.formatedDateTime(transaction.createdAt), 1),
                 ],
@@ -121,8 +121,8 @@ class TransactionsCard extends StatelessWidget {
 
   Widget buildDetailsCell(String text, int flex) {
     final words = text.trim().split(RegExp(r'\s+'));
-    final isLong = words.length > 4;
-    final preview = isLong ? '${words.sublist(0, 4).join(' ')} ...' : text;
+    final isLong = words.length > 3;
+    final preview = isLong ? '${words.sublist(0, 3).join(' ')} ...' : text;
 
     return Expanded(
       flex: flex,

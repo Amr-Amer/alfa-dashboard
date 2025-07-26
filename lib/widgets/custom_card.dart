@@ -1,4 +1,4 @@
-import 'package:alfa_dashboard/models/main_card_model.dart';
+import 'package:alfa_dashboard/core/models/main_card_model.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   final MainCardModel mainCardModel;
 
-  CustomCard({super.key, required this.mainCardModel});
+  const CustomCard({super.key, required this.mainCardModel});
 
   @override
   Widget build(BuildContext context) {

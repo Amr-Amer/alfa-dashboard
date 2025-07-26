@@ -8,6 +8,7 @@ import 'package:alfa_dashboard/features/transaction/presentation/manager/transac
 import 'package:alfa_dashboard/features/user/data/data_sources/user_remote_data_source.dart';
 import 'package:alfa_dashboard/features/user/data/repositories/user_repo_imp.dart';
 import 'package:alfa_dashboard/features/user/domain/repositories/user_repo.dart';
+import 'package:alfa_dashboard/features/user/domain/use_cases/delete_user_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_user_data_usecse.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_balance_usecase.dart';
@@ -77,6 +78,7 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => FetchAllWithdrawsUseCase(sl()));
   sl.registerLazySingleton(() => UpdateWithdrawRequestStatusUseCase(sl()));
   sl.registerLazySingleton(() => DeleteTransactionUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteUserUseCase(sl()));
 
   // sl.registerLazySingleton(() => CreateWithdrawRequestUseCase(sl()));
 
@@ -86,6 +88,7 @@ Future<void> initializeDependencies() async {
     updateUserUseCase: sl(),
     fetchAllUSersUseCase: sl(),
     updateUserBalanceUseCase: sl(),
+    deleteUserUseCase: sl(),
   ));
 
   sl.registerFactory(() => TransactionCubit(

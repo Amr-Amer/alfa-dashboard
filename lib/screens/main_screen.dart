@@ -3,7 +3,7 @@ import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/widgets/custom_card_grid_view.dart';
 import 'package:alfa_dashboard/features/user/presentation/widgets/users_card.dart';
 import 'package:alfa_dashboard/widgets/graph_map_grid_view.dart';
-import 'package:alfa_dashboard/widgets/header.dart';
+import 'package:alfa_dashboard/features/user/presentation/widgets/header.dart';
 
 class MainScreen extends StatelessWidget {
 

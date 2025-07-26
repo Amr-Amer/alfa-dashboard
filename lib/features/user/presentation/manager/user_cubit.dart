@@ -1,4 +1,6 @@
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
+import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
+import 'package:alfa_dashboard/features/user/domain/use_cases/delete_user_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_user_data_usecse.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_balance_usecase.dart';
@@ -14,33 +16,35 @@ class UserCubit extends Cubit<UserState> {
   final UpdateUserDataUseCase updateUserUseCase;
   final FetchAllUSersUseCase fetchAllUSersUseCase;
   final UpdateUserBalanceUseCase updateUserBalanceUseCase;
+  final DeleteUserUseCase deleteUserUseCase;
 
   UserCubit({
     required this.fetchUserDataUseCase,
     required this.updateUserUseCase,
     required this.fetchAllUSersUseCase,
-    required this.updateUserBalanceUseCase
+    required this.updateUserBalanceUseCase,
+    required this.deleteUserUseCase
   }) : super(UserInitial()) {
-    fetchUserData();
+    fetchAllUsers();
   }
 
 
-  Future<void> fetchUserData() async {
-    emit(UserLoading());
-    final result = await fetchUserDataUseCase.call(NoParams());
-
-    result.fold(
-          (error) => emit(UserError(error.message)),
-          (userData) {
-        userModel = userData;
-        emit(UserLoaded(userData));
-      },
-    );
-    if (kDebugMode) {
-      print("user data.................... ");
-      print(user);
-    }
-  }
+  // Future<void> fetchUserData() async {
+  //   emit(UserLoading());
+  //   final result = await fetchUserDataUseCase.call(NoParams());
+  //
+  //   result.fold(
+  //         (error) => emit(UserError(error.message)),
+  //         (userData) {
+  //       userModel = userData;
+  //       emit(UserLoaded(userData));
+  //     },
+  //   );
+  //   if (kDebugMode) {
+  //     print("user data.................... ");
+  //     print(user);
+  //   }
+  // }
 
     Future<void> fetchAllUsers() async {
       emit(UserLoading());
@@ -68,28 +72,17 @@ class UserCubit extends Cubit<UserState> {
             email: '',
             displayName: '',
             emailVerified: false,
-            phoneNumber: ''
+            phoneNumber: '',
+            status: UserStatus.active
         )
     );
-
     result.fold(
           (error) => emit(UserError(error.message)),
           (userData) {
         userModel = userData;
-        emit(UserUpdated(userData));
+        emit(UserUpdatedSuccess(userData));
       },
     );
-  }
-
-
-  Future<void> increaseBalance(double amount) async {
-    if (userModel != null) {
-      final updatedUser = userModel!.copyWith(
-        balance: userModel!.balance + amount,
-        totalEarnings: (userModel!.totalEarnings ?? 0) + amount,
-      );
-      await updateUserData(updatedUser);
-    }
   }
 
 
@@ -98,10 +91,24 @@ class UserCubit extends Cubit<UserState> {
     final result = await updateUserUseCase.call(user);
 
     result.fold(
-          (error) => emit(UserError(error.message)),
-          (userData) {
+          (error) => emit(UserUpdateError(error.message)),
+          (userData)async {
             userModel = userData;
-        emit(UserUpdated(userData));
+           await fetchAllUsers();
+        emit(AllUsersLoaded(usersList));
+      },
+    );
+  }
+
+  Future<void> deleteUser(String uid) async {
+    emit(UserUpdateLoading());
+    final result = await deleteUserUseCase.call(uid);
+
+    result.fold(
+          (error) => emit(UserUpdateError(error.message)),
+          (_)async {
+           await fetchAllUsers();
+        emit(AllUsersLoaded(usersList));
       },
     );
   }

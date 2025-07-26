@@ -122,5 +122,15 @@ class TransactionCubit extends Cubit<TransactionState> {
     }
   }
 
+  void filterByDateRange(DateTime from, DateTime to) {
+    final filtered = transactions.where((transaction) {
+      final created = transaction.createdAt;
+      return created.isAfter(from.subtract(const Duration(seconds: 1))) &&
+          created.isBefore(to.add(const Duration(days: 1)));
+    }).toList();
+
+    emit(TransactionsLoaded(filtered));
+  }
+
 
 }

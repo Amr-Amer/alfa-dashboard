@@ -37,7 +37,7 @@ class HeaderWidget extends StatelessWidget {
                 children: [
                   BlocListener<UserCubit, UserState>(
                     listener: (context, state) {
-                      if (state is UserLoaded) {
+                      if (state is AllUsersLoaded) {
                         FocusScope.of(context).unfocus();
                       }
                     },

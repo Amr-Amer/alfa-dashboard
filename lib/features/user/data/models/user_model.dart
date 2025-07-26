@@ -1,4 +1,5 @@
 import 'package:alfa_dashboard/features/user/domain/entities/user_entity.dart';
+import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
@@ -19,7 +20,7 @@ class UserModel extends UserEntity {
     super.updatedAt,
     super.languageCode,
     super.notificationsEnabled = true,
-    super.isActive = true,
+    required super.status,
     super.isAdmin = false,
   });
 
@@ -40,7 +41,7 @@ class UserModel extends UserEntity {
       updatedAt: DateTime.now(),
       languageCode: 'ar',
       notificationsEnabled: true,
-      isActive: true,
+      status: UserStatus.active,
       isAdmin: false,
     );
   }
@@ -62,7 +63,7 @@ class UserModel extends UserEntity {
       updatedAt: (data[FirebaseConstants.updatedAt] as Timestamp?)?.toDate(),
       languageCode: data[FirebaseConstants.languageCode],
       notificationsEnabled: data[FirebaseConstants.notificationsEnabled] ?? true,
-      isActive: data[FirebaseConstants.isActive] ?? true,
+      status: UserStatusExtension.fromString(data[FirebaseConstants.status] ?? UserStatus.active.name),
       isAdmin: data[FirebaseConstants.isAdmin] ?? false,
     );
   }
@@ -84,7 +85,7 @@ class UserModel extends UserEntity {
       FirebaseConstants.updatedAt: updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
       FirebaseConstants.languageCode: languageCode,
       FirebaseConstants.notificationsEnabled: notificationsEnabled,
-      FirebaseConstants.isActive: isActive,
+      FirebaseConstants.status: status.name,
       FirebaseConstants.isAdmin: isAdmin,
     };
   }
@@ -104,7 +105,7 @@ class UserModel extends UserEntity {
     DateTime? updatedAt,
     String? languageCode,
     bool? notificationsEnabled,
-    bool? isActive,
+    UserStatus? status,
     bool? isAdmin,
   }) {
     return UserModel(
@@ -122,7 +123,7 @@ class UserModel extends UserEntity {
       updatedAt: updatedAt ?? this.updatedAt,
       languageCode: languageCode ?? this.languageCode,
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
-      isActive: isActive ?? this.isActive,
+      status: status ?? this.status,
       isAdmin: isAdmin ?? this.isAdmin,
     );
   }
@@ -144,7 +145,7 @@ class UserModel extends UserEntity {
       updatedAt: updatedAt,
       languageCode: languageCode,
       notificationsEnabled: notificationsEnabled,
-      isActive: isActive,
+      status: status,
       isAdmin: isAdmin,
     );
   }

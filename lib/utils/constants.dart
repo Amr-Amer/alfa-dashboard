@@ -23,6 +23,7 @@ class AppConstants {
   static const green900Color =  Color(0xFF2E7D32);
   static const orangeColor =  Color(0xFFFF9800);
   static const gray1Color = Color(0xFF5E5E5E);
+  static const clrGradient3 = Color(0xFF250960);
 
 
   ///fonts

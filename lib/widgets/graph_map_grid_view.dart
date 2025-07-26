@@ -1,15 +1,13 @@
+import 'package:alfa_dashboard/core/models/bottom_card_model.dart';
 import 'package:flutter/material.dart';
-import 'package:alfa_dashboard/models/bottom_card_model.dart';
-import 'package:alfa_dashboard/models/main_card_model.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/widgets/chart_card.dart';
-import 'package:alfa_dashboard/widgets/custom_card.dart';
 
 class GraphMapGridView extends StatelessWidget {
   final int crossAxisCount;
   final double childAspectRatio;
 
-  GraphMapGridView(
+  const GraphMapGridView(
       {super.key, this.childAspectRatio = 1.5, this.crossAxisCount = 2});
 
   @override

@@ -31,14 +31,16 @@ class AppStrings {
   static const String transactionTime = 'وقت المعاملة';
   static const String currency = 'العملة';
   static const String createdAt = 'تاريخ الانشاء';
-
+  static const String userId = 'رقم المستخدم';
+  static const String active = 'نشط';
+  static const String inactive = 'غير نشط';
+  static const String userDetails = 'تفاصيل المستخدم';
   static const String userName = 'اسم المستخدم';
   static const String inputNote = 'ادخل الملاحظة';
   static const String newNote = 'ملاحظة جديدة';
   static const String cancel = 'الغاء';
   static const String save = 'حفظ';
   static const String adminNotes = 'ملاحظات الادمن';
-
   static const String all = 'الكل';
   static const String pending = 'قيد الانتظار';
   static const String approved = 'موافق';
@@ -56,8 +58,7 @@ class AppStrings {
   static const String delete = 'حذف';
   static const String close = 'اغلاق';
   static const String egyptCurrency = 'جنيه';
-
-
+  static const String egyptian = 'مصرى';
   static const String userNotAuthenticated = 'يجب تسجيل الدخول اولا';
   static const String loading = 'جاري التحميل...';
   static const String error = 'حدث خطأ';

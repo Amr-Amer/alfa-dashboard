@@ -1,5 +1,5 @@
 import 'dart:ffi';
-import 'package:alfa_dashboard/models/bottom_card_model.dart';
+import 'package:alfa_dashboard/core/models/bottom_card_model.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:alfa_dashboard/widgets/chart.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class ChartCard extends StatelessWidget {
   final BottomCardModel bottomCardModel;
 
-  ChartCard({super.key, required this.bottomCardModel});
+  const ChartCard({super.key, required this.bottomCardModel});
 
   @override
   Widget build(BuildContext context) {

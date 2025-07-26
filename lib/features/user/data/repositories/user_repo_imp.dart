@@ -32,6 +32,7 @@ class UserRepositoryImp implements UserRepository {
       await authFireStoreDataSource.updateUser(user);
       return right(user);
     } catch (e) {
+      print("updateUserError $e");
       return left(ErrorFactory.unKnownError());
     }
   }
@@ -40,7 +41,8 @@ class UserRepositoryImp implements UserRepository {
   Future<Either<ErrorModel, List<UserModel>>> fetchAllUsers()async {
     try {
       return await authFireStoreDataSource.fetchAllUsers();
-    } catch (_) {
+    } catch (e) {
+      print("fetchAllUsersError $e");
       return left(ErrorFactory.unKnownError());
     }
   }
@@ -50,8 +52,20 @@ class UserRepositoryImp implements UserRepository {
     try{
       await authFireStoreDataSource.updateUserBalance( user);
       return right(user);
-    }catch(_){
+    }catch(e){
+      print("updateUserBalanceError $e");
       return left(ErrorFactory.unKnownError());
     }
+  }
+
+  @override
+  Future<Either<ErrorModel, Unit>> deleteUser(String uid) async {
+   try{
+     await authFireStoreDataSource.deleteUser(uid);
+     return right(unit);
+   }catch(e){
+     print("deleteUserError $e");
+     return left(ErrorFactory.unKnownError());
+   }
   }
 }

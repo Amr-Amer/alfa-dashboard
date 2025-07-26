@@ -1,5 +1,5 @@
+import 'package:alfa_dashboard/core/models/main_card_model.dart';
 import 'package:flutter/material.dart';
-import 'package:alfa_dashboard/models/main_card_model.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/widgets/custom_card.dart';
 

@@ -12,13 +12,16 @@ abstract class FirebaseConstants {
   static const String displayName = "displayName";
   static const String email = "email";
   static const String emailVerified = "emailVerified";
-  static const String isActive = "isActive";
+  // static const String isActive = "isActive";
   static const String isAdmin = "isAdmin";
   static const String languageCode = "languageCode";
   static const String notificationsEnabled = "notificationsEnabled";
   static const String phoneNumber = "phoneNumber";
   static const String photoURL = "photoURL";
   static const String totalEarnings = "totalEarnings";
+  static const String userStats = "status";
+  static const String active = "active";
+  static const String inactive = "inactive";
 
   //TODO: Transaction
   static const String amount = "amount";

@@ -1,3 +1,4 @@
+import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
 import 'package:equatable/equatable.dart';
 
 class UserEntity extends Equatable {
@@ -16,7 +17,7 @@ class UserEntity extends Equatable {
   final String? languageCode;
   final bool notificationsEnabled;
   final bool isAdmin;
-  final bool isActive;
+  final UserStatus status;
 
   const UserEntity({
     required this.uid,
@@ -34,9 +35,9 @@ class UserEntity extends Equatable {
     this.languageCode = 'ar',
     this.notificationsEnabled = true,
     this.isAdmin = false,
-    this.isActive = true,
+    required this.status,
   });
 
   @override
-  List<Object?> get props => [uid, email, displayName, photoURL, emailVerified, phoneNumber, address, balance, totalEarnings, currency, createdAt, updatedAt, languageCode, notificationsEnabled, isAdmin, isActive];
+  List<Object?> get props => [uid, email, displayName, photoURL, emailVerified, phoneNumber, address, balance, totalEarnings, currency, createdAt, updatedAt, languageCode, notificationsEnabled, isAdmin, status];
 }

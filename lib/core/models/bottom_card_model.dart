@@ -1,6 +1,6 @@
+import 'package:alfa_dashboard/core/models/graph_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alfa_dashboard/models/graph_model.dart';
 
 class BottomCardModel {
   final IconData iconData;

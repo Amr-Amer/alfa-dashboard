@@ -1,4 +1,5 @@
 import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
+import 'package:alfa_dashboard/features/transaction/presentation/widgets/date_range_filter_widget.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/widgets/trnas_search_widget.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
@@ -13,7 +14,7 @@ class TransactionFilterSearch extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          flex: 4,
+          flex: 3,
           child: TrnasSearchWidget(),
         ),
         const SizedBox(width: 12),
@@ -140,6 +141,10 @@ class TransactionFilterSearch extends StatelessWidget {
             ),
           ),
         ),
+
+        SizedBox(width: 50),
+
+        DateRangeFilterWidget()
       ],
     );
   }

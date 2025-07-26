@@ -20,7 +20,6 @@ class WithdrawRequestsScreen extends StatelessWidget {
           BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..fetchAllWithdrawsRequest()),
           BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsers()),
         ],
-        // create: (context) => sl<WithdrawRequestsCubit>()..fetchAllWithdrawsRequest(),
         child: Scaffold(
           body: BlocBuilder<WithdrawRequestsCubit, WithdrawRequestsState>(
             builder: (context, state) {

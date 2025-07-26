@@ -11,6 +11,7 @@ abstract class AuthFireStoreDataSource {
   Future<Either<ErrorModel, List<UserModel>>> fetchAllUsers();
   Future<void> updateUser(UserModel user);
   Future<void> updateUserBalance(UserModel user);
+  Future<void> deleteUser(String uid);
   }
 
 class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
@@ -70,6 +71,10 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
     if (user.phoneNumber.isNotEmpty) {
       updateData[FirebaseConstants.phoneNumber] = user.phoneNumber;
     }
+
+    if (user.status.name.isNotEmpty) {
+      updateData[FirebaseConstants.status] = user.status.name;
+    }
     if (user.balance
         .toString()
         .isNotEmpty) {
@@ -77,7 +82,7 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
     }
 
     if (user.address != null && user.address!
-        .isNotEmpty) { // Ensure address itself is not null and not empty if it's a String
+        .isNotEmpty) {
       updateData[FirebaseConstants.address] = user.address;
     }
     if (user.updatedAt != null) {
@@ -118,5 +123,11 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
     }
   }
 
-
+  @override
+  Future<void> deleteUser(String uid) {
+    return fireStore
+        .collection(FirebaseConstants.usersCollection)
+        .doc(uid)
+        .delete();
+  }
 }

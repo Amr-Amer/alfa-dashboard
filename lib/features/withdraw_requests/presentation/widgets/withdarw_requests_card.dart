@@ -157,7 +157,6 @@ class WithdrawsRequestsCard extends StatelessWidget {
     );
   }
 
-
   Widget _buildDetailRow(TransactionModel transaction, BuildContext context , {Key? key}) {
     return  MouseRegion(
       onEnter: (_) => _hoveredRow.value = transaction.id,
@@ -176,7 +175,7 @@ class WithdrawsRequestsCard extends StatelessWidget {
             },
             child: AnimatedContainer(
               duration: Duration(milliseconds: 200),
-              color: isHovered ? AppConstants.clrGradient2: const Color(0xFF131D1F),
+              color: isHovered ? AppConstants.clrGradient3: const Color(0xFF131D1F),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
                 children: [

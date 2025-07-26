@@ -1,6 +1,6 @@
+import 'package:alfa_dashboard/core/models/menu_model.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:alfa_dashboard/models/menu_model.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:alfa_dashboard/widgets/gradient_icon.dart';
 

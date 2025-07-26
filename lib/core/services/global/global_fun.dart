@@ -5,6 +5,7 @@ import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_met
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_type.dart';
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
+import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -75,10 +76,30 @@ class GlobalFun {
     }
   }
 
+  static String getUserStatusAr(UserStatus status) {
+    switch (status.name.toLowerCase()) {
+      case FirebaseConstants.active:
+        return AppStrings.active;
+      case FirebaseConstants.inactive:
+        return AppStrings.inactive;
+      default:
+        return AppStrings.unknown;
+    }
+  }
+
   static String getCurrencyAr(String currency) {
     switch (currency) {
       case FirebaseConstants.egyptCurrency:
         return AppStrings.egyptCurrency;
+      default:
+        return AppStrings.unknown;
+    }
+  }
+
+  static String getCountryAr(String currency) {
+    switch (currency) {
+      case FirebaseConstants.egyptCurrency:
+        return AppStrings.egyptian;
       default:
         return AppStrings.unknown;
     }
