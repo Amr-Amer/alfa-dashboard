@@ -1,6 +1,6 @@
 import 'package:alfa_dashboard/features/transaction/presentation/pages/transaction_page.dart';
 import 'package:alfa_dashboard/features/user/presentation/pages/users_page.dart';
-import 'package:alfa_dashboard/screens/withdraw_requests_screen.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/presentation/pages/withdraw_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/screens/main_screen.dart';

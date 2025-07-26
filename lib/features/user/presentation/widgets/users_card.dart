@@ -22,7 +22,7 @@ class UsersCard extends StatelessWidget {
         constraints:
             BoxConstraints(minWidth: MediaQuery.of(context).size.width),
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+          // scrollDirection: Axis.vertical,
           controller: controller,
           child: bottomData(context),
         ),

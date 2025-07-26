@@ -1,5 +1,12 @@
 import 'dart:math';
+import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
+import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
+import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_method.dart';
+import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
+import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_type.dart';
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
+import 'package:alfa_dashboard/utils/app_strings.dart';
+import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class GlobalFun {
@@ -14,20 +21,69 @@ class GlobalFun {
     return '$hour:$minute $period';
   }
 
-  // static Color getStatusColor(TransactionStatus status) {
-  //   switch (status.name.toLowerCase()) {
-  //     case FirebaseConstants.completed:
-  //       return AppColors.greenColor;
-  //     case FirebaseConstants.pending:
-  //       return AppColors.orangeColor;
-  //     case FirebaseConstants.failed:
-  //       return AppColors.redColor;
-  //     case FirebaseConstants.cancelled:
-  //       return AppColors.blue600Color;
-  //     default:
-  //       return AppColors.gray1Color;
-  //   }
-  // }
+  static Color getStatusColor(TransactionStatus status) {
+    switch (status.name.toLowerCase()) {
+      case FirebaseConstants.completed:
+        return AppConstants.greenColor;
+      case FirebaseConstants.pending:
+        return AppConstants.orangeColor;
+      case FirebaseConstants.failed:
+        return AppConstants.redColor;
+      case FirebaseConstants.cancelled:
+        return AppConstants.blue600Color;
+      default:
+        return AppConstants.gray1Color;
+    }
+  }
+
+  static String getTypeAr(TransactionType type) {
+    switch (type.name.toLowerCase()) {
+      case FirebaseConstants.deposit:
+        return AppStrings.deposit;
+      case FirebaseConstants.withdraw:
+        return AppStrings.withdraw;
+      default:
+        return AppStrings.unknown;
+    }
+  }
+
+  static String getMethodAr(TransactionMethod method) {
+    switch (method.name.toLowerCase()) {
+      case FirebaseConstants.visa:
+        return AppStrings.visa;
+      case FirebaseConstants.wallet:
+        return AppStrings.wallet;
+      case FirebaseConstants.cash:
+        return AppStrings.cash;
+      default:
+        return AppStrings.unknown;
+    }
+  }
+
+  static String getStatusAr(TransactionStatus status) {
+    switch (status.name.toLowerCase()) {
+      case FirebaseConstants.completed:
+        return AppStrings.completed;
+      case FirebaseConstants.pending:
+        return AppStrings.pending;
+      case FirebaseConstants.failed:
+        return AppStrings.failed;
+      case FirebaseConstants.cancelled:
+        return AppStrings.cancelled;
+      default:
+        return AppStrings.unknown;
+    }
+  }
+
+  static String getCurrencyAr(String currency) {
+    switch (currency) {
+      case FirebaseConstants.egyptCurrency:
+        return AppStrings.egyptCurrency;
+      default:
+        return AppStrings.unknown;
+    }
+  }
+
 
   static String generateTransactionId() {
     final now = DateTime.now();
@@ -40,6 +96,11 @@ class GlobalFun {
     final minute = now.minute.toString().padLeft(1, '0');
 
     return 'A-$year$month$day$hour$minute$random';
+  }
+
+
+  static String formatedDateTime(DateTime dateTime) {
+    return '${dateTime.day}-${dateTime.month}-${dateTime.year}  ${dateTime.hour}:${dateTime.minute}:${dateTime.second}';
   }
 }
 
@@ -60,3 +121,4 @@ Widget wSpace(double w) {
     width: w,
   );
 }
+

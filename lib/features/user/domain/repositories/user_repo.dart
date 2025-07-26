@@ -9,4 +9,6 @@ abstract class UserRepository {
   Future<Either<ErrorModel,List<UserModel>>> fetchAllUsers();
 
   Future<Either<ErrorModel,UserModel>> updateUser(UserModel user);
+
+  Future<Either<ErrorModel,UserModel>> updateUserBalance(UserModel user);
 }

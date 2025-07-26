@@ -13,6 +13,7 @@ class TransactionEntity extends Equatable {
   final TransactionStatus status;
   final TransactionType type;
   final String uid;
+  final String userName;
   final String bankTransactionId;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -28,6 +29,7 @@ class TransactionEntity extends Equatable {
     required this.status,
     required this.type,
     required this.uid,
+    required this.userName,
     required this.bankTransactionId,
     required this.createdAt,
     required this.updatedAt,
@@ -45,8 +47,10 @@ class TransactionEntity extends Equatable {
     status,
     type,
     uid,
+    userName,
     bankTransactionId,
     createdAt,
     updatedAt,
+    adminNote
   ];
 }

@@ -44,4 +44,14 @@ class UserRepositoryImp implements UserRepository {
       return left(ErrorFactory.unKnownError());
     }
   }
+
+  @override
+  Future<Either<ErrorModel, UserModel>> updateUserBalance(UserModel user)async {
+    try{
+      await authFireStoreDataSource.updateUserBalance( user);
+      return right(user);
+    }catch(_){
+      return left(ErrorFactory.unKnownError());
+    }
+  }
 }

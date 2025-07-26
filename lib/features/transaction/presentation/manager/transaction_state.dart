@@ -6,6 +6,25 @@ class TransactionInitial extends TransactionState {}
 
 class TransactionLoading extends TransactionState {}
 
+class TransactionDeleted extends TransactionState {
+  final String message;
+
+  TransactionDeleted({required this.message});
+}
+
+class TransactionDeleteError extends TransactionState {
+  final String message;
+
+  TransactionDeleteError(this.message);
+}
+
+class TransactionDeleting extends TransactionState {
+  final String transactionId;
+
+  TransactionDeleting(this.transactionId);
+}
+
+
 class TransactionsLoaded extends TransactionState {
   final List<TransactionModel> transactions;
 

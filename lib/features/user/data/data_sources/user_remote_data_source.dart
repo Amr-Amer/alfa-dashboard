@@ -10,6 +10,7 @@ abstract class AuthFireStoreDataSource {
   Future<Either<ErrorModel, UserModel>> fetchUserData(String uid);
   Future<Either<ErrorModel, List<UserModel>>> fetchAllUsers();
   Future<void> updateUser(UserModel user);
+  Future<void> updateUserBalance(UserModel user);
   }
 
 class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
@@ -45,6 +46,21 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
   }
 
   @override
+  Future<void> updateUserBalance(UserModel user) async {
+    try {
+      final doc = fireStore
+          .collection(FirebaseConstants.usersCollection)
+          .doc(user.uid);
+
+      await doc.update({
+        FirebaseConstants.balance: FieldValue.increment(user.balance)
+      });
+    } catch (e) {
+      throw ErrorFactory.fromFirebaseError(e as FirebaseException);
+    }
+  }
+
+  @override
   Future<void> updateUser(UserModel user) async {
     final Map<String, dynamic> updateData = {};
 
@@ -54,22 +70,27 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
     if (user.phoneNumber.isNotEmpty) {
       updateData[FirebaseConstants.phoneNumber] = user.phoneNumber;
     }
-    if (user.balance.toString().isNotEmpty) {
+    if (user.balance
+        .toString()
+        .isNotEmpty) {
       updateData[FirebaseConstants.balance] = user.balance;
     }
 
-    if (user.address != null && user.address!.isNotEmpty) { // Ensure address itself is not null and not empty if it's a String
+    if (user.address != null && user.address!
+        .isNotEmpty) { // Ensure address itself is not null and not empty if it's a String
       updateData[FirebaseConstants.address] = user.address;
     }
     if (user.updatedAt != null) {
-      updateData[FirebaseConstants.updatedAt] = Timestamp.fromDate(user.updatedAt!);
+      updateData[FirebaseConstants.updatedAt] =
+          Timestamp.fromDate(user.updatedAt!);
     } else {
       updateData[FirebaseConstants.updatedAt] = FieldValue.serverTimestamp();
     }
     if (user.languageCode != null && user.languageCode!.isNotEmpty) {
       updateData[FirebaseConstants.languageCode] = user.languageCode;
     }
-    updateData[FirebaseConstants.notificationsEnabled] = user.notificationsEnabled;
+    updateData[FirebaseConstants.notificationsEnabled] =
+        user.notificationsEnabled;
     if (updateData.isNotEmpty) {
       await fireStore
           .collection(FirebaseConstants.usersCollection)
@@ -79,14 +100,16 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
   }
 
   @override
-  Future<Either<ErrorModel, List<UserModel>>> fetchAllUsers() async{
+  Future<Either<ErrorModel, List<UserModel>>> fetchAllUsers() async {
     try {
       final doc = fireStore
           .collection(FirebaseConstants.usersCollection)
           .get();
 
       return doc.then((snapshot) {
-        final users = snapshot.docs.map((doc) => UserModel.fromMap(doc.data())).toList();
+        final users = snapshot.docs
+            .map((doc) => UserModel.fromMap(doc.data()))
+            .toList();
         return right(users);
       });
     } catch (e) {
@@ -94,4 +117,6 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
           ErrorFactory.fromFirebaseError(e as FirebaseException));
     }
   }
+
+
 }

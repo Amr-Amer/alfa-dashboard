@@ -16,6 +16,7 @@ class TransactionModel extends TransactionEntity {
     required super.status,
     required super.type,
     required super.uid,
+    required super.userName,
     required super.bankTransactionId,
     required super.createdAt,
     required super.updatedAt,
@@ -33,6 +34,7 @@ class TransactionModel extends TransactionEntity {
       status: TransactionStatusExt.fromString(map[FirebaseConstants.status] ?? FirebaseConstants.pending),
       type: TransactionTypeExt.fromString(map[FirebaseConstants.type] ?? FirebaseConstants.deposit),
       uid: map[FirebaseConstants.uId] ?? '',
+      userName: map[FirebaseConstants.userName] ?? '',
       bankTransactionId: map[FirebaseConstants.bankTransactionId] ?? '',
       createdAt: (map[FirebaseConstants.createdAt] as Timestamp).toDate(),
       updatedAt: (map[FirebaseConstants.updatedAt] as Timestamp).toDate(),
@@ -51,10 +53,45 @@ class TransactionModel extends TransactionEntity {
       FirebaseConstants.status: status.name,
       FirebaseConstants.type: type.name,
       FirebaseConstants.uId: uid,
+      FirebaseConstants.userName: userName,
       FirebaseConstants.bankTransactionId : bankTransactionId,
       FirebaseConstants.createdAt: Timestamp.fromDate(createdAt),
       FirebaseConstants.updatedAt: Timestamp.fromDate(updatedAt),
       FirebaseConstants.adminNote : adminNote
     };
+  }
+
+  TransactionModel copyWith({
+    String? id,
+    double? amount,
+    double? commission,
+    String? currency,
+    TransactionMethod? method,
+    String? note,
+    TransactionStatus? status,
+    TransactionType? type,
+    String? uid,
+    String? userName,
+    String? bankTransactionId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? adminNote,
+  }) {
+    return TransactionModel(
+      id: id ?? this.id,
+      amount: amount ?? this.amount,
+      commission: commission ?? this.commission,
+      currency: currency ?? this.currency,
+      method: method ?? this.method,
+      note: note ?? this.note,
+      status: status ?? this.status,
+      type: type ?? this.type,
+      uid: uid ?? this.uid,
+      userName: userName ?? this.userName,
+      bankTransactionId: bankTransactionId ?? this.bankTransactionId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      adminNote: adminNote ?? this.adminNote,
+    );
   }
 }

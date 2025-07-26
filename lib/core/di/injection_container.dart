@@ -1,6 +1,7 @@
 import 'package:alfa_dashboard/features/transaction/data/data_sources/transactions_remote_data_source.dart';
 import 'package:alfa_dashboard/features/transaction/data/repository/transaction_repo_imp.dart';
 import 'package:alfa_dashboard/features/transaction/domain/repository/transaction_repository.dart';
+import 'package:alfa_dashboard/features/transaction/domain/usecases/delete_transaction_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_all_transaction_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_user_transaction_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
@@ -9,8 +10,15 @@ import 'package:alfa_dashboard/features/user/data/repositories/user_repo_imp.dar
 import 'package:alfa_dashboard/features/user/domain/repositories/user_repo.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_user_data_usecse.dart';
+import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_balance_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_data_usecase.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/data/data_sources/withdraw_remote_data_source.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/data/repository/withdraw_repo_imp.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/domain/repository/withdraw_repository.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/fetch_all_withdraws_usecase.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/update_withdraw_request_status_usecase.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,23 +38,18 @@ Future<void> initializeDependencies() async {
 
 
   //TODO: Remote data source
-  // sl.registerLazySingleton<AuthRemoteDataSource>(
-  //       () => AuthRemoteDataSourceImpl(sl(), sl()),
-  // );
 
   sl.registerLazySingleton<TransactionsRemoteDataSource>(
         () => TransactionsRemoteDataSourceImpl(sl()),
   );
 
-  // sl.registerLazySingleton<BalanceRemoteDataSource>(
-  //       () => BalanceRemoteDataSourceImpl(firestore: sl()),
-  // );
+  sl.registerLazySingleton<WithdrawRequestsRemoteDataSource>(
+        () => WithdrawRequestsRemoteDataSourceImpl(sl()),
+  );
 
 
   //TODO: Repository
-  // sl.registerLazySingleton<AuthRepository>(
-  //       () => AuthRepositoryImpl(sl()),
-  // );
+
   sl.registerLazySingleton<UserRepository>(
         () => UserRepositoryImp(sl()),
   );
@@ -55,9 +58,9 @@ Future<void> initializeDependencies() async {
         () => TransactionRepoImpl(sl()),
   );
 
-  // sl.registerLazySingleton<BalanceRepository>(
-  //       () => BalanceRepoImpl(sl()),
-  // );
+  sl.registerLazySingleton<WithdrawRepository>(
+        () => WithdrawRepoImpl(sl()),
+  );
 
   //TODO: Use cases
   // sl.registerLazySingleton(() => SignInUseCase(sl()));
@@ -68,34 +71,32 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => FetchUserDataUseCase(sl()));
   sl.registerLazySingleton(() => UpdateUserDataUseCase(sl()));
   sl.registerLazySingleton(() => FetchAllUSersUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateUserBalanceUseCase(sl()));
   sl.registerLazySingleton(() => FetchUserTransactionUseCase(sl()));
   sl.registerLazySingleton(() => FetchAllTransactionUseCase(sl()));
+  sl.registerLazySingleton(() => FetchAllWithdrawsUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateWithdrawRequestStatusUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteTransactionUseCase(sl()));
 
   // sl.registerLazySingleton(() => CreateWithdrawRequestUseCase(sl()));
 
-  // Cubit
-  // sl.registerFactory(() => AuthCubit(
-  //   signInUseCase: sl(),
-  //   signUpUseCase: sl(),
-  //   signOutUseCase: sl(),
-  //   resetPasswordUseCase: sl(),
-  //   getCurrentUserUseCase: sl(),
-  // ));
 
   sl.registerFactory(() => UserCubit(
     fetchUserDataUseCase: sl(),
     updateUserUseCase: sl(),
     fetchAllUSersUseCase: sl(),
+    updateUserBalanceUseCase: sl(),
   ));
 
   sl.registerFactory(() => TransactionCubit(
     fetchUserTransactionUseCase: sl(),
     fetchAllTransactionsUseCase: sl(),
+    deleteTransactionUseCase: sl(),
   ));
 
-  // sl.registerFactory(() => BalanceCubit(
-  //   createTransactionUseCase: sl(),
-  //   userCubit: sl(),
-  // ));
-
+  sl.registerFactory(() => WithdrawRequestsCubit(
+    fetchAllWithdrawsUseCase: sl(),
+    updateWithdrawRequestStatusUseCase: sl(),
+    userCubit: sl(),
+  ));
 }

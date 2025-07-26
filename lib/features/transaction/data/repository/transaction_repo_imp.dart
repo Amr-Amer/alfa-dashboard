@@ -24,6 +24,15 @@ class TransactionRepoImpl implements TransactionRepository {
   Future<Either<ErrorModel, List<TransactionModel>>> fetchAllTransactions() {
     return remoteDataSource.fetchAllTransactions();
   }
+
+  @override
+  Future<Either<ErrorModel, Unit>> deleteTransaction(String transactionId) async {
+    try {
+      return await remoteDataSource.deleteTransaction(transactionId);
+    } catch (e) {
+      return left(ErrorModel(message: 'Failed to delete transaction', code: ''));
+    }
+  }
 }
 
 

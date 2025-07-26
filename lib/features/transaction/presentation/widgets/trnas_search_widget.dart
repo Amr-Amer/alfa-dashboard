@@ -39,7 +39,7 @@ class TrnasSearchWidget extends StatelessWidget {
                       color: AppConstants.clrBoxBackground)),
               contentPadding: EdgeInsets.symmetric(
                   vertical: 5),
-              hintText: AppStrings.search,
+              hintText: AppStrings.searchById,
               hintStyle: TextStyle(
                   color: AppConstants.clrSmallText,
                   fontSize: 14),

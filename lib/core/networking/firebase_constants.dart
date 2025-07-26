@@ -5,6 +5,7 @@ abstract class FirebaseConstants {
 
   //TODO: User
   static const String uId = "uId";
+  static const String userName = "userName";
   static const String address = "address";
   static const String balance = "balance";
   static const String currency = "currency";
@@ -29,6 +30,7 @@ abstract class FirebaseConstants {
   static const String status = "status";
   static const String type = "type";
   static const String deposit = "deposit";
+  static const String withdraw = "withdraw";
   static const String pending = "pending";
   static const String completed = "completed";
   static const String failed = "failed";
@@ -37,6 +39,7 @@ abstract class FirebaseConstants {
   static const String cash = "cash";
   static const String visa = "visa";
   static const String wallet = "wallet";
+  static const String egyptCurrency = "EGP";
 
   //TODO: General
   static const String createdAt = "createdAt";

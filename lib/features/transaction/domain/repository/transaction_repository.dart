@@ -10,4 +10,6 @@ abstract class TransactionRepository {
 
   Future<Either<ErrorModel, List<TransactionModel>>> fetchAllTransactions();
 
+  Future<Either<ErrorModel, Unit>> deleteTransaction(String transactionId);
+
 }

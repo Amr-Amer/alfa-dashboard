@@ -23,6 +23,11 @@ class UserUpdated extends UserState {
 
   UserUpdated(this.user);
 }
+class UpdateUserBalance extends UserState {
+  final UserModel user;
+
+  UpdateUserBalance(this.user);
+}
 
 class UserUpdateLoading extends UserState {}
 

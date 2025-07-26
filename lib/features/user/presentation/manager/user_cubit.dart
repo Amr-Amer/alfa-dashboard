@@ -1,6 +1,7 @@
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_user_data_usecse.dart';
+import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_balance_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_data_usecase.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_state.dart';
 import 'package:bloc/bloc.dart';
@@ -12,11 +13,13 @@ class UserCubit extends Cubit<UserState> {
   final FetchUserDataUseCase fetchUserDataUseCase;
   final UpdateUserDataUseCase updateUserUseCase;
   final FetchAllUSersUseCase fetchAllUSersUseCase;
+  final UpdateUserBalanceUseCase updateUserBalanceUseCase;
 
   UserCubit({
     required this.fetchUserDataUseCase,
     required this.updateUserUseCase,
-    required this.fetchAllUSersUseCase
+    required this.fetchAllUSersUseCase,
+    required this.updateUserBalanceUseCase
   }) : super(UserInitial()) {
     fetchUserData();
   }
@@ -55,6 +58,28 @@ class UserCubit extends Cubit<UserState> {
         print(user);
       }
     }
+
+  Future<void> updateUserBalance(double amount, String uid) async {
+    emit(UserUpdateLoading());
+    final result = await updateUserBalanceUseCase.call(
+        UserModel(
+            uid: uid,
+            balance: amount,
+            email: '',
+            displayName: '',
+            emailVerified: false,
+            phoneNumber: ''
+        )
+    );
+
+    result.fold(
+          (error) => emit(UserError(error.message)),
+          (userData) {
+        userModel = userData;
+        emit(UserUpdated(userData));
+      },
+    );
+  }
 
 
   Future<void> increaseBalance(double amount) async {
