@@ -129,45 +129,45 @@ class BuildUserDetailRow extends StatelessWidget {
     );
   }
 
-  void _showEditBalanceDialog(BuildContext context, UserModel user) {
-    final TextEditingController controller = TextEditingController(text: user.balance.toString());
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("تعديل الرصيد"),
-          content: TextField(
-            controller: controller,
-            keyboardType: TextInputType.numberWithOptions(decimal: true),
-            decoration: InputDecoration(
-              labelText: "الرصيد الجديد",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text("إلغاء"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final newBalance = double.tryParse(controller.text);
-                if (newBalance != null) {
-                  context.read<UserCubit>().updateUserBalance(newBalance, user.uid);
-                  Navigator.pop(context);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("الرجاء إدخال رقم صحيح"))
-                  );
-                }
-              },
-              child: Text("حفظ"),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  // void _showEditBalanceDialog(BuildContext context, UserModel user) {
+  //   final TextEditingController controller = TextEditingController(text: user.balance.toString());
+  //
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: Text("تعديل الرصيد"),
+  //         content: TextField(
+  //           controller: controller,
+  //           keyboardType: TextInputType.numberWithOptions(decimal: true),
+  //           decoration: InputDecoration(
+  //             labelText: "الرصيد الجديد",
+  //             border: OutlineInputBorder(),
+  //           ),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.pop(context),
+  //             child: Text("إلغاء"),
+  //           ),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               final newBalance = double.tryParse(controller.text);
+  //               if (newBalance != null) {
+  //                 context.read<UserCubit>().updateUserBalance(newBalance, user.uid);
+  //                 Navigator.pop(context);
+  //               } else {
+  //                 ScaffoldMessenger.of(context).showSnackBar(
+  //                     SnackBar(content: Text("الرجاء إدخال رقم صحيح"))
+  //                 );
+  //               }
+  //             },
+  //             child: Text("حفظ"),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
 }
