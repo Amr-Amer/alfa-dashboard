@@ -45,7 +45,7 @@ class SideMenu extends StatelessWidget {
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     Text(
-                      "Management",
+                      AppStrings.managementApp,
                       style: TextStyle(fontSize: 10, color: Colors.white70),
                     ),
                   ],
@@ -57,6 +57,7 @@ class SideMenu extends StatelessWidget {
             // Main Menu Items
             Expanded(
               child: Column(
+                spacing: 7,
                 children: [
                   for (int i = 0; i < menu.length; i++)
                     Padding(

@@ -1,12 +1,12 @@
-import 'package:alfa_dashboard/core/di/injection_container.dart';
+import 'package:alfa_dashboard/core/services/global/global_fun.dart';
 import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
-import 'package:alfa_dashboard/features/user/presentation/manager/user_state.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/fetch_all_withdraws_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/update_withdraw_request_status_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
   final FetchAllWithdrawsUseCase fetchAllWithdrawsUseCase;
@@ -17,7 +17,6 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
     required this.fetchAllWithdrawsUseCase, required this.updateWithdrawRequestStatusUseCase, required this.userCubit,})
       : super(WithdrawRequestsInitial());
 
-  final List<TransactionModel> transactions = [];
   String selectedStatus = 'all';
 
 
@@ -29,9 +28,9 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
     data.fold(
           (ifLeft) => emit(WithdrawRequestsError(ifLeft.message)),
           (ifRight) {
-        transactions.clear();
-        transactions.addAll(ifRight);
-        emit(WithdrawRequestsLoaded(transactions));
+        withdrawRequests.clear();
+        withdrawRequests.addAll(ifRight);
+        emit(WithdrawRequestsLoaded(withdrawRequests));
       },
     );
   }
@@ -66,7 +65,7 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
             );
           }
           await fetchAllWithdrawsRequest();
-          emit(WithdrawRequestsLoaded(transactions));
+          emit(WithdrawRequestsLoaded(withdrawRequests));
         },
       );
     } catch (e) {
@@ -80,10 +79,10 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
 
   void searchWithdrawRequests(String query) {
     if (query.isNotEmpty) {
-      final filteredTransactions = transactions.where((transaction) => transaction.type.name.contains(query.toLowerCase())).toList();
+      final filteredTransactions = withdrawRequests.where((transaction) => transaction.type.name.contains(query.toLowerCase())).toList();
       emit(WithdrawRequestsLoaded(filteredTransactions));
     } else {
-      emit(WithdrawRequestsLoaded(transactions));
+      emit(WithdrawRequestsLoaded(withdrawRequests));
     }
   }
 
@@ -91,9 +90,9 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
     selectedStatus = status;
 
     if (status == 'all') {
-      emit(WithdrawRequestsLoaded(transactions));
+      emit(WithdrawRequestsLoaded(withdrawRequests));
     } else {
-      final filtered = transactions
+      final filtered = withdrawRequests
           .where((transaction) =>
       transaction.status.name.toLowerCase() == status.toLowerCase())
           .toList();

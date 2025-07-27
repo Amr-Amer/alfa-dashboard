@@ -3,23 +3,23 @@ import 'package:alfa_dashboard/features/user/presentation/pages/users_page.dart'
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/pages/withdraw_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:alfa_dashboard/responsive.dart';
-import 'package:alfa_dashboard/screens/main_screen.dart';
+import 'package:alfa_dashboard/features/main/presentation/pages/main_page.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:alfa_dashboard/widgets/side_menu.dart';
 
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardPageState extends State<DashboardPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   int selectedIndex = 0;
 
   final List<Widget> pages = [
-    MainScreen(scaffoldKey: GlobalKey()),
+    MainPage(scaffoldKey: GlobalKey()),
     UsersPage(scaffoldKey: GlobalKey()),
     TransactionsPage(scaffoldKey: GlobalKey()),
     WithdrawRequestsScreen(),

@@ -1,20 +1,21 @@
-import 'dart:ffi';
 import 'package:alfa_dashboard/core/models/bottom_card_model.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:alfa_dashboard/widgets/chart.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
 
 class ChartCard extends StatelessWidget {
   final BottomCardModel bottomCardModel;
+  final String totalTransactions;
+  final List<PieChartSectionData> paiChartSelectionData;
 
-  const ChartCard({super.key, required this.bottomCardModel});
+  const ChartCard({super.key, required this.bottomCardModel, required this.paiChartSelectionData, required this.totalTransactions});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(!Responsive.isMobile(context) ? 15 : 10),
+      padding: EdgeInsets.all(!Responsive.isMobile(context) ? 20 : 10),
       decoration: BoxDecoration(
           color: AppConstants.clrBoxBackground,
           boxShadow: [BoxShadow(color: Color(0xff333333), spreadRadius: 1)],
@@ -54,60 +55,60 @@ class ChartCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis),
           ),
           SizedBox(
-            height: 10,
+            height: 50,
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Column(
                     children: [
                       for (var i = 0;
                           i < bottomCardModel.graphData!.length;
                           i++)
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 10,
-                                height: 10,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: bottomCardModel.graphData![i].color),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    bottomCardModel.graphData![i].title,
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: AppConstants.clrBigText),
-                                  ),
-                                  Text(
-                                    bottomCardModel.graphData![i].subTitle,
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        color: AppConstants.clrSmallText),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 10,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: bottomCardModel.graphData![i].color),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  bottomCardModel.graphData![i].title,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: AppConstants.clrBigText),
+                                ),
+                                Text(
+                                  bottomCardModel.graphData![i].subTitle,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: AppConstants.clrSmallText),
+                                ),
+                              ],
+                            )
+                          ],
                         )
                     ],
                   )),
               Expanded(
-                  flex: 4,
+                  flex: 2,
                   child: bottomCardModel.type == 0
-                      ? Chart()
+                      ? Chart(paiChartSelectionData: paiChartSelectionData,totalTransactions: totalTransactions,)
                       : Image.asset("${AppConstants.rootImage}map.png",
                   fit: BoxFit.fill,
                   width: 500,))

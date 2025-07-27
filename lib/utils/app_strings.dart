@@ -3,6 +3,7 @@ class AppStrings {
   static const String dashboard = 'لوحة التحكم';
   static const String users = 'المستخدمين';
   static const String withdrawRequests = 'طلبات السحب';
+  static const String totalWithdrawRequests = ' عدد طلبات السحب';
   static const String settings = 'الاعدادات';
   static const String logOut = 'تسجيل الخروج';
   static const String numbers = 'الرقم';
@@ -63,4 +64,13 @@ class AppStrings {
   static const String loading = 'جاري التحميل...';
   static const String error = 'حدث خطأ';
   static const String transactionDeletedSuccessfully = 'تم حذف المعاملة بنجاح';
+  static const String totalUsers = 'عدد المستخدمين';
+  static const String totalTransactions = 'عدد المعاملات';
+  static const String completedTransactions = 'عدد المعاملات المكتملة';
+  static const String failedTransactions = 'عدد المعاملات المفشلة';
+  static const String cancelledTransactions = 'عدد المعاملات الملغية';
+  static const String pendingTransactions = 'عدد المعاملات القيد الانتظار';
+  static const String transactionsDetails = 'تفاصيل المعاملات';
+  static const String managementApp = 'ادارة التطبيق';
+  static const String payroll = 'الدفعات';
 }

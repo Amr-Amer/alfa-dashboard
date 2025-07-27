@@ -6,6 +6,8 @@ import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/services/global/global_fun.dart';
 part 'transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
@@ -16,7 +18,6 @@ class TransactionCubit extends Cubit<TransactionState> {
   TransactionCubit({required this.fetchUserTransactionUseCase, required this.fetchAllTransactionsUseCase, required this.deleteTransactionUseCase})
       : super(TransactionInitial());
 
-  final List<TransactionModel> transactions = [];
   String selectedStatus = 'all';
   String selectedType = 'all';
   String selectedMethod = 'all';

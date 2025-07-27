@@ -1,19 +1,28 @@
+import 'package:alfa_dashboard/core/di/injection_container.dart';
+import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
+import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:alfa_dashboard/responsive.dart';
-import 'package:alfa_dashboard/widgets/custom_card_grid_view.dart';
-import 'package:alfa_dashboard/features/user/presentation/widgets/users_card.dart';
+import 'package:alfa_dashboard/features/main/presentation/widgets/custom_card_grid_view.dart';
 import 'package:alfa_dashboard/widgets/graph_map_grid_view.dart';
-import 'package:alfa_dashboard/features/user/presentation/widgets/header.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MainScreen extends StatelessWidget {
+class MainPage extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey;
 
-  const MainScreen({super.key,required this.scaffoldKey});
+  const MainPage({super.key,required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsers(),),
+        BlocProvider(create: (context) => sl<TransactionCubit>()..fetchAllTransactions(),),
+        BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..fetchAllWithdrawsRequest(),),
+      ],
+  child: SizedBox(
       height: MediaQuery.of(context).size.height,
       child: SingleChildScrollView(
         child: Padding(
@@ -23,10 +32,6 @@ class MainScreen extends StatelessWidget {
               SizedBox(
                 height: Responsive.isMobile(context) ? 5 : 5,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: HeaderWidget(scaffoldKey: scaffoldKey),
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -65,6 +70,7 @@ class MainScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),
+);
   }
 }

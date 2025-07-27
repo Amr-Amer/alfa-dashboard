@@ -10,6 +10,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:alfa_dashboard/core/usecase/use_case.dart';
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
+import 'package:flutter/material.dart';
 
 class UserCubit extends Cubit<UserState> {
   final FetchUserDataUseCase fetchUserDataUseCase;
@@ -28,6 +29,8 @@ class UserCubit extends Cubit<UserState> {
     fetchAllUsers();
   }
 
+
+  final TextEditingController balanceController = TextEditingController();
 
   // Future<void> fetchUserData() async {
   //   emit(UserLoading());

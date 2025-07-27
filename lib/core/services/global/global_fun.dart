@@ -127,8 +127,15 @@ class GlobalFun {
 
 
 UserModel? userModel;
-List<UserModel> usersList = [];
 UserModel? get user => userModel;
+List<UserModel> usersList = [];
+List<UserModel> get users => usersList;
+List<TransactionModel> withdrawRequests = [];
+List<TransactionModel> get withdrawRequestsList => withdrawRequests;
+TransactionModel? transactionModel;
+TransactionModel? get transaction => transactionModel;
+List<TransactionModel> transactionsList = [];
+List<TransactionModel> get transactions => transactionsList;
 
 
 Widget hSpace (double h) {
