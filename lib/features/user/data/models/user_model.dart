@@ -22,6 +22,7 @@ class UserModel extends UserEntity {
     super.notificationsEnabled = true,
     required super.status,
     super.isAdmin = false,
+    required super.fcmToken,
   });
 
   /// ✅ From Firebase Auth
@@ -43,6 +44,7 @@ class UserModel extends UserEntity {
       notificationsEnabled: true,
       status: UserStatus.active,
       isAdmin: false,
+      fcmToken: '',
     );
   }
 
@@ -65,6 +67,7 @@ class UserModel extends UserEntity {
       notificationsEnabled: data[FirebaseConstants.notificationsEnabled] ?? true,
       status: UserStatusExtension.fromString(data[FirebaseConstants.status] ?? UserStatus.active.name),
       isAdmin: data[FirebaseConstants.isAdmin] ?? false,
+      fcmToken: data[FirebaseConstants.fcmToken] ?? '',
     );
   }
 
@@ -87,6 +90,7 @@ class UserModel extends UserEntity {
       FirebaseConstants.notificationsEnabled: notificationsEnabled,
       FirebaseConstants.status: status.name,
       FirebaseConstants.isAdmin: isAdmin,
+      FirebaseConstants.fcmToken: fcmToken
     };
   }
 
@@ -107,6 +111,7 @@ class UserModel extends UserEntity {
     bool? notificationsEnabled,
     UserStatus? status,
     bool? isAdmin,
+    String? fcmToken
   }) {
     return UserModel(
       uid: uid ?? this.uid,
@@ -125,6 +130,7 @@ class UserModel extends UserEntity {
       notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
       status: status ?? this.status,
       isAdmin: isAdmin ?? this.isAdmin,
+      fcmToken: fcmToken ?? this.fcmToken
     );
   }
 
@@ -147,6 +153,7 @@ class UserModel extends UserEntity {
       notificationsEnabled: notificationsEnabled,
       status: status,
       isAdmin: isAdmin,
+      fcmToken: fcmToken
     );
   }
 }

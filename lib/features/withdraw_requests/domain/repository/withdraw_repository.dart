@@ -12,4 +12,6 @@ abstract class WithdrawRepository {
 
   Future<Either<ErrorModel, TransactionModel>> updateWithdrawRequestStatus(TransactionModel transaction);
 
+  Stream<List<TransactionModel>> getWithdrawRequestsStream();
+
 }

@@ -1,6 +1,6 @@
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
+
 
 abstract class UserState {}
 

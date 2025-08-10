@@ -1,4 +1,5 @@
 import 'package:alfa_dashboard/core/models/bottom_card_model.dart';
+import 'package:alfa_dashboard/core/services/global/global_fun.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:alfa_dashboard/widgets/chart.dart';
@@ -22,9 +23,6 @@ class ChartCard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: Column(
         children: [
-          SizedBox(
-            height: 10,
-          ),
           Container(
             height: 40,
             width: 40,
@@ -54,9 +52,7 @@ class ChartCard extends StatelessWidget {
                 fontSize: Responsive.isMobile(context) ? 11 : 12,
                 overflow: TextOverflow.ellipsis),
           ),
-          SizedBox(
-            height: 50,
-          ),
+          hSpace(30),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

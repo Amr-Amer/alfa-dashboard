@@ -1,6 +1,7 @@
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
 import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
+import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_state.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
@@ -316,7 +317,7 @@ class WithdrawsRequestsCard extends StatelessWidget {
               } else {
                 final result = await showDialog<String>(
                   context: context,
-                  builder: (_) => _buildNoteDialog(transaction.adminNote ?? '', context: context),
+                  builder: (_) => _buildNoteDialog(transaction.adminNote, context: context),
                 );
 
                 if (result == null || result.trim().isEmpty) {
@@ -330,6 +331,8 @@ class WithdrawsRequestsCard extends StatelessWidget {
               }
 
               context.read<WithdrawRequestsCubit>().changeWithdrawStatus(
+                userToken: transaction.userToken,
+                // userToken: "evqepKZqRniOO4pYsBzeZY:APA91bEjSBl1P1Ht8J-0G-vMDzn_xOwFeShJ9TjmExur9AdfGniLhtPG7SSjZFzUtEltva2TCEF5WdOALrvXo8gFuQkAer45CfNYztWNAsJaZO-r2wuNqnM",
                 transaction,
                 newStatus,
                 userId: transaction.uid,

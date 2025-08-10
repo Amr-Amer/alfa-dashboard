@@ -2,6 +2,7 @@ import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
 import 'package:alfa_dashboard/core/networking/firebase_error_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 abstract class ErrorFactory {
   static ErrorModel unKnownError() {
     return ErrorModel(
@@ -12,75 +13,85 @@ abstract class ErrorFactory {
 
   static ErrorModel userNotFoundError() {
     return ErrorModel(
-      message: "المستخدم غير موجود",
+      message: FirebaseErrorKeys.userNotFound,
       code: "user-not-found",
     );
   }
 
 
+
+  static ErrorModel fromMessage(String message) {
+    return ErrorModel(
+      message: message,
+      code: "custom-error", // A generic code for custom messages
+    );
+  }
+
   static ErrorModel userBalanceNullError() {
     return ErrorModel(
-      message:'',
-      code: '0',
+      message: FirebaseErrorKeys.userBalanceNotAvailable,
+      code: 'user-balance-null',
     );
   }
 
 
   static ErrorModel fromFirebaseError(FirebaseException error) {
-    String message = _getDefaultMessageForFirebaseError(error);
+    String messageKey = _getDefaultMessageForFirebaseError(error);
 
     return ErrorModel(
-      message: message,
+      message: messageKey,
       code: error.code,
     );
   }
 
   static String _getDefaultMessageForFirebaseError(FirebaseException error) {
     switch (error.code) {
-      // Authentication Errors
-      case 'invalid-email':
+    // Authentication Errors
+      case FirebaseErrorKeys.invalidEmail:
         return FirebaseErrorKeys.invalidEmail;
-      case 'weak-password':
+      case FirebaseErrorKeys.weakPassword:
         return FirebaseErrorKeys.weakPassword;
-      case 'email-already-in-use':
+      case FirebaseErrorKeys.emailAlreadyInUse:
         return FirebaseErrorKeys.emailAlreadyInUse;
-      case 'user-disabled':
+      case FirebaseErrorKeys.userDisabled:
         return FirebaseErrorKeys.userDisabled;
-      case 'user-not-found':
+      case FirebaseErrorKeys.userNotFound:
         return FirebaseErrorKeys.userNotFound;
-      case 'wrong-password':
+      case FirebaseErrorKeys.wrongPassword:
         return FirebaseErrorKeys.wrongPassword;
 
-      // Database Errors
-      case 'permission-denied':
+    // Database Errors
+      case FirebaseErrorKeys.permissionDenied:
         return FirebaseErrorKeys.permissionDenied;
-      case 'not-found':
+      case FirebaseErrorKeys.notFound:
         return FirebaseErrorKeys.notFound;
-      case 'unavailable':
+      case FirebaseErrorKeys.unavailable:
         return FirebaseErrorKeys.unavailable;
-      case 'invalid-argument':
+      case FirebaseErrorKeys.invalidArgument:
         return FirebaseErrorKeys.invalidArgument;
+      case FirebaseErrorKeys.failedPrecondition: // New case for FAILED_PRECONDITION
+        return FirebaseErrorKeys.failedPrecondition;
 
-      // Storage Errors
-      case 'unauthorized':
+    // Storage Errors
+      case FirebaseErrorKeys.unauthorized:
         return FirebaseErrorKeys.unauthorized;
-      case 'quota-exceeded':
+      case FirebaseErrorKeys.quotaExceeded:
         return FirebaseErrorKeys.quotaExceeded;
 
-      // Common Errors
-      case 'invalid-credential':
+    // Common Errors
+      case FirebaseErrorKeys.invalidCredential:
         return FirebaseErrorKeys.invalidCredential;
-      case 'network-error':
+      case FirebaseErrorKeys.networkError:
         return FirebaseErrorKeys.networkError;
-      case 'cancelled':
+      case FirebaseErrorKeys.cancelled:
         return FirebaseErrorKeys.cancelled;
-      case 'resource-exists':
+      case FirebaseErrorKeys.resourceExists:
         return FirebaseErrorKeys.resourceExists;
       case 'operation-not-supported':
         return FirebaseErrorKeys.operationNotSupported;
-      case 'internal-error':
+      case FirebaseErrorKeys.internalError:
         return FirebaseErrorKeys.internalError;
-      case 'invalid-state-error':
+      case FirebaseErrorKeys.invalidStateError:
         return FirebaseErrorKeys.invalidStateError;
 
       default:

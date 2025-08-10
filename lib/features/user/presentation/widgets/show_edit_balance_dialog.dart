@@ -1,7 +1,5 @@
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
-import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShowEditBalanceDialog extends StatefulWidget {
   final UserModel user;

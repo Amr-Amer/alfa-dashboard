@@ -21,6 +21,7 @@ class TransactionModel extends TransactionEntity {
     required super.createdAt,
     required super.updatedAt,
     required super.adminNote,
+    required super.userToken,
   });
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
@@ -39,6 +40,7 @@ class TransactionModel extends TransactionEntity {
       createdAt: (map[FirebaseConstants.createdAt] as Timestamp).toDate(),
       updatedAt: (map[FirebaseConstants.updatedAt] as Timestamp).toDate(),
       adminNote: map[FirebaseConstants.adminNote] ?? '',
+      userToken: map[FirebaseConstants.fcmToken] ?? '',
     );
   }
 
@@ -57,7 +59,8 @@ class TransactionModel extends TransactionEntity {
       FirebaseConstants.bankTransactionId : bankTransactionId,
       FirebaseConstants.createdAt: Timestamp.fromDate(createdAt),
       FirebaseConstants.updatedAt: Timestamp.fromDate(updatedAt),
-      FirebaseConstants.adminNote : adminNote
+      FirebaseConstants.adminNote : adminNote,
+      FirebaseConstants.fcmToken : userToken
     };
   }
 
@@ -76,6 +79,7 @@ class TransactionModel extends TransactionEntity {
     DateTime? createdAt,
     DateTime? updatedAt,
     String? adminNote,
+    String? userToken
   }) {
     return TransactionModel(
       id: id ?? this.id,
@@ -92,6 +96,34 @@ class TransactionModel extends TransactionEntity {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       adminNote: adminNote ?? this.adminNote,
+      userToken: userToken ?? this.userToken
     );
   }
+
+  factory TransactionModel.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> doc,
+      ) {
+    final data = doc.data()!;
+    return TransactionModel(
+      id: doc.id,
+      amount: (data[FirebaseConstants.amount] ?? 0).toDouble(),
+      commission: (data[FirebaseConstants.commission] ?? 0).toDouble(),
+      currency: data[FirebaseConstants.currency] ?? '',
+      method: TransactionMethodExt.fromString(
+          data[FirebaseConstants.method] ?? FirebaseConstants.visa),
+      note: data[FirebaseConstants.note] ?? '',
+      status: TransactionStatusExt.fromString(
+          data[FirebaseConstants.status] ?? FirebaseConstants.pending),
+      type: TransactionTypeExt.fromString(
+          data[FirebaseConstants.type] ?? FirebaseConstants.deposit),
+      uid: data[FirebaseConstants.uId] ?? '',
+      userName: data[FirebaseConstants.userName] ?? '',
+      bankTransactionId: data[FirebaseConstants.bankTransactionId] ?? '',
+      createdAt: (data[FirebaseConstants.createdAt] as Timestamp).toDate(),
+      updatedAt: (data[FirebaseConstants.updatedAt] as Timestamp).toDate(),
+      adminNote: data[FirebaseConstants.adminNote] ?? '',
+      userToken: data[FirebaseConstants.fcmToken] ?? '',
+    );
+  }
+
 }

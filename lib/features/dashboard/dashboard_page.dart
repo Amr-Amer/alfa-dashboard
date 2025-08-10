@@ -1,3 +1,4 @@
+import 'package:alfa_dashboard/features/notifications/presentation/pages/notifications_page.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/pages/transaction_page.dart';
 import 'package:alfa_dashboard/features/user/presentation/pages/users_page.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/pages/withdraw_requests_screen.dart';
@@ -23,6 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
     UsersPage(scaffoldKey: GlobalKey()),
     TransactionsPage(scaffoldKey: GlobalKey()),
     WithdrawRequestsScreen(),
+    NotificationsPage(scaffoldKey: GlobalKey()),
   ];
 
   void _onMenuItemSelected(int index) {

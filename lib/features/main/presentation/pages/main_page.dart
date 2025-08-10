@@ -20,7 +20,7 @@ class MainPage extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsers(),),
         BlocProvider(create: (context) => sl<TransactionCubit>()..fetchAllTransactions(),),
-        BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..fetchAllWithdrawsRequest(),),
+        BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..setupWithdrawRequestsStream(),),
       ],
   child: SizedBox(
       height: MediaQuery.of(context).size.height,

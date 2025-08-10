@@ -62,7 +62,7 @@ class TransactionsRemoteDataSourceImpl implements TransactionsRemoteDataSource {
       final querySnapshot = firestore
           .collection(FirebaseConstants.transCollection)
           .orderBy(FirebaseConstants.createdAt, descending: true)
-          .limitToLast(FirebaseConstants.transactionsAdminListLimit)
+          .limitToLast(FirebaseConstants.adminListLimit)
           .get();
 
       return querySnapshot.then((snapshot) {

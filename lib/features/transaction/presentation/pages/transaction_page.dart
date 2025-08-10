@@ -1,4 +1,4 @@
-// 📁 lib/features/transaction/presentation/pages/transaction_page.dart
+// 📁 lib/features/transaction/presentation/pages/notifications_page.dart
 import 'package:alfa_dashboard/core/di/injection_container.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/widgets/transaction_filter_search.dart';
@@ -46,6 +46,5 @@ class TransactionsPage extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

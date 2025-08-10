@@ -18,6 +18,7 @@ class UserEntity extends Equatable {
   final bool notificationsEnabled;
   final bool isAdmin;
   final UserStatus status;
+  final String fcmToken;
 
   const UserEntity({
     required this.uid,
@@ -36,8 +37,26 @@ class UserEntity extends Equatable {
     this.notificationsEnabled = true,
     this.isAdmin = false,
     required this.status,
+    required this.fcmToken,
   });
 
   @override
-  List<Object?> get props => [uid, email, displayName, photoURL, emailVerified, phoneNumber, address, balance, totalEarnings, currency, createdAt, updatedAt, languageCode, notificationsEnabled, isAdmin, status];
+  List<Object?> get props => [
+    uid,
+    email,
+    displayName,
+    photoURL,
+    emailVerified,
+    phoneNumber,
+    address,
+    balance,
+    totalEarnings,
+    currency,
+    createdAt,
+    updatedAt,
+    languageCode,
+    notificationsEnabled,
+    isAdmin,
+    status,
+    fcmToken];
 }

@@ -5,6 +5,7 @@ import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
 import 'package:alfa_dashboard/features/user/domain/repositories/user_repo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class UserRepositoryImp implements UserRepository {
   final AuthFireStoreDataSource authFireStoreDataSource;
@@ -32,7 +33,9 @@ class UserRepositoryImp implements UserRepository {
       await authFireStoreDataSource.updateUser(user);
       return right(user);
     } catch (e) {
-      print("updateUserError $e");
+      if (kDebugMode) {
+        print("updateUserError $e");
+      }
       return left(ErrorFactory.unKnownError());
     }
   }
@@ -42,7 +45,9 @@ class UserRepositoryImp implements UserRepository {
     try {
       return await authFireStoreDataSource.fetchAllUsers();
     } catch (e) {
-      print("fetchAllUsersError $e");
+      if (kDebugMode) {
+        print("fetchAllUsersError $e");
+      }
       return left(ErrorFactory.unKnownError());
     }
   }
@@ -53,7 +58,9 @@ class UserRepositoryImp implements UserRepository {
       await authFireStoreDataSource.updateUserBalance( user);
       return right(user);
     }catch(e){
-      print("updateUserBalanceError $e");
+      if (kDebugMode) {
+        print("updateUserBalanceError $e");
+      }
       return left(ErrorFactory.unKnownError());
     }
   }
@@ -64,7 +71,9 @@ class UserRepositoryImp implements UserRepository {
      await authFireStoreDataSource.deleteUser(uid);
      return right(unit);
    }catch(e){
-     print("deleteUserError $e");
+     if (kDebugMode) {
+       print("deleteUserError $e");
+     }
      return left(ErrorFactory.unKnownError());
    }
   }

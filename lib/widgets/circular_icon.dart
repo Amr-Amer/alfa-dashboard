@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class CircularIcon extends StatelessWidget {
 
-  IconData iconData;
+  final IconData iconData;
 
-  CircularIcon({super.key,required this.iconData});
+  const CircularIcon({super.key,required this.iconData});
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ abstract class FirebaseConstants {
 
   static const String usersCollection = "users";
   static const String transCollection = "transactions";
+  static const String notificationsCollection = "notifications";
 
   //TODO: User
   static const String uId = "uId";
@@ -22,6 +23,8 @@ abstract class FirebaseConstants {
   static const String userStats = "status";
   static const String active = "active";
   static const String inactive = "inactive";
+  static const String data = "data";
+  static const String fcmToken = "fcmToken";
 
   //TODO: Transaction
   static const String amount = "amount";
@@ -43,6 +46,19 @@ abstract class FirebaseConstants {
   static const String visa = "visa";
   static const String wallet = "wallet";
   static const String egyptCurrency = "EGP";
+  static const String transType = "type";
+
+  //TODO: Notification
+  // Notifications fields
+  static const String notificationId = "id";
+  static const String notificationUid = "uid";
+  static const String notificationTitle = "title";
+  static const String notificationBody = "body";
+  static const String notificationType = "type";
+  static const String notificationData = "data";
+  static const String notificationRead = "read";
+  static const String notificationStatus = "status";
+
 
   //TODO: General
   static const String createdAt = "createdAt";
@@ -50,7 +66,7 @@ abstract class FirebaseConstants {
 
   static const int searchListLimit = 10;
   static const int transactionsListLimit = 10;
-  static const int transactionsAdminListLimit = 50;
+  static const int adminListLimit = 50;
   static const int usersListLimit = 10;
   static const int hoursOfWithdrawLimit = 24;
   static const int minimumWithdrawalLimit = 100;
@@ -58,33 +74,35 @@ abstract class FirebaseConstants {
 }
 
 abstract class FirebaseErrorKeys {
-  // Authentication Errors
-  static const String invalidEmail = "invalid_email";
-  static const String weakPassword = "weak_password";
-  static const String emailAlreadyInUse = "email_already_in_use";
-  static const String userDisabled = "user_disabled";
-  static const String userNotFound = "user_not_found";
-  static const String wrongPassword = "wrong_password";
+  // أخطاء المصادقة
+  static const String invalidEmail = "البريد الإلكتروني غير صالح";
+  static const String weakPassword = "كلمة المرور ضعيفة";
+  static const String emailAlreadyInUse = "البريد الإلكتروني مستخدم بالفعل";
+  static const String userDisabled = "تم تعطيل المستخدم";
+  static const String userNotFound = "المستخدم غير موجود";
+  static const String wrongPassword = "كلمة المرور غير صحيحة";
 
-  // Database Errors
-  static const String permissionDenied = "permission_denied";
-  static const String notFound = "not_found";
-  static const String unavailable = "unavailable";
-  static const String invalidArgument = "invalid_argument";
+  // أخطاء قاعدة البيانات
+  static const String permissionDenied = "تم رفض الإذن";
+  static const String notFound = "غير موجود";
+  static const String unavailable = "الخدمة غير متوفرة";
+  static const String invalidArgument = "معامل غير صالح";
 
-  // Storage Errors
-  static const String unauthorized = "unauthorized";
-  static const String quotaExceeded = "quota_exceeded";
+  // أخطاء التخزين
+  static const String unauthorized = "غير مصرح";
+  static const String quotaExceeded = "تم تجاوز الحصة المسموح بها";
 
-  // Common Errors
-  static const String invalidCredential = "invalid_credential";
-  static const String networkError = "network_error";
-  static const String cancelled = "cancelled";
-  static const String resourceExists = "resource_exists";
-  static const String operationNotSupported = "operation_not_supported";
-  static const String internalError = "internal_error";
-  static const String invalidStateError = "invalid_state_error";
-  static const String unknownError = "unknown_error"; // New default key
+  // أخطاء شائعة
+  static const String invalidCredential = "بيانات الاعتماد غير صالحة";
+  static const String networkError = "خطأ في الشبكة";
+  static const String cancelled = "تم الإلغاء";
+  static const String resourceExists = "المورد موجود بالفعل";
+  static const String operationNotSupported = "العملية غير مدعومة";
+  static const String internalError = "خطأ داخلي";
+  static const String invalidStateError = "حالة غير صالحة";
+  static const String unknownError = "خطأ غير معروف";
+  static const String userBalanceNotAvailable = "رصيد المستخدم غير متاح";
+  static const String failedPrecondition = "شرط مبدئي فشل";
 }
 
 // Arabic translations

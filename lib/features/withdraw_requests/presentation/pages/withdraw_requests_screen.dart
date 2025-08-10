@@ -17,7 +17,7 @@ class WithdrawRequestsScreen extends StatelessWidget {
     return SafeArea(
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..fetchAllWithdrawsRequest()),
+          BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..setupWithdrawRequestsStream()),
           BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsers()),
         ],
         child: Scaffold(

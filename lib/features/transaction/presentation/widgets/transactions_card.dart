@@ -64,7 +64,6 @@ class TransactionsCard extends StatelessWidget {
                       buildHeaderCell(Icons.info_outline, AppStrings.status, 1),      // Transaction Status
                       buildHeaderCell(Icons.account_balance_wallet, AppStrings.transactionAmount, 1),    // Transaction Amount
                       // buildHeaderCell(Icons.note_alt_outlined, AppStrings.transactionNotes, 1),     // Transaction Notes
-                      buildHeaderCell(Icons.note_alt_outlined, AppStrings.adminNotes, 1),     // Transaction Notes
                       buildHeaderCell(Icons.av_timer_rounded, AppStrings.transactionTime, 1), // Transaction Time
                     ],
                   ),
@@ -106,8 +105,6 @@ class TransactionsCard extends StatelessWidget {
                   buildDetailsCell(GlobalFun.getMethodAr(transaction.method), 1),
                   buildDetailsCell(GlobalFun.getStatusAr(transaction.status), 1),
                   buildDetailsCell('${transaction.amount}  ${GlobalFun.getCurrencyAr(transaction.currency)}',1),
-                  // buildDetailsCell(transaction.note, 1),
-                  buildDetailsCell(transaction.adminNote, 1),
                   buildDetailsCell(GlobalFun.formatedDateTime(transaction.createdAt), 1),
                 ],
               ),

@@ -1,3 +1,15 @@
+import 'package:alfa_dashboard/core/services/notifications/notification_service.dart';
+import 'package:alfa_dashboard/features/notifications/data/data_sources/notification_remote_data_source_impl.dart';
+import 'package:alfa_dashboard/features/notifications/data/data_sources/notifications_remote_data_source.dart';
+import 'package:alfa_dashboard/features/notifications/data/repository/notification_repository_impl.dart';
+import 'package:alfa_dashboard/features/notifications/domain/repository/notification_repo.dart';
+import 'package:alfa_dashboard/features/notifications/domain/usecases/add_notification_usecase.dart';
+import 'package:alfa_dashboard/features/notifications/domain/usecases/fetch_all_notification_usecase.dart';
+import 'package:alfa_dashboard/features/notifications/domain/usecases/fetch_user_notifications_usecase.dart';
+import 'package:alfa_dashboard/features/notifications/domain/usecases/mark_all_notifications_as_read_usecase.dart';
+import 'package:alfa_dashboard/features/notifications/domain/usecases/mark_notification_as_read_usecase.dart';
+import 'package:alfa_dashboard/features/notifications/domain/usecases/send_notification_usecase.dart';
+import 'package:alfa_dashboard/features/notifications/presentation/manager/notifications_cubit.dart';
 import 'package:alfa_dashboard/features/transaction/data/data_sources/transactions_remote_data_source.dart';
 import 'package:alfa_dashboard/features/transaction/data/repository/transaction_repo_imp.dart';
 import 'package:alfa_dashboard/features/transaction/domain/repository/transaction_repository.dart';
@@ -18,9 +30,11 @@ import 'package:alfa_dashboard/features/withdraw_requests/data/data_sources/with
 import 'package:alfa_dashboard/features/withdraw_requests/data/repository/withdraw_repo_imp.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/repository/withdraw_repository.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/fetch_all_withdraws_usecase.dart';
+import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/get_eithdraw_requests_stream_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/update_withdraw_request_status_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -31,10 +45,14 @@ Future<void> initializeDependencies() async {
   //TODO: External
   sl.registerLazySingleton(() => FirebaseAuth.instance);
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton(() => FirebaseStorage.instance);
 
   //TODO: Firestore data source
   sl.registerLazySingleton<AuthFireStoreDataSource>(
         () => AuthFireStoreDataSourceImpl(sl()),
+  );
+
+ sl.registerLazySingleton<NotificationService>(() => NotificationService(),
   );
 
 
@@ -46,6 +64,10 @@ Future<void> initializeDependencies() async {
 
   sl.registerLazySingleton<WithdrawRequestsRemoteDataSource>(
         () => WithdrawRequestsRemoteDataSourceImpl(sl()),
+  );
+
+  sl.registerLazySingleton<NotificationRemoteDataSource>(
+        () =>  NotificationRemoteDataSourceImpl(sl()),
   );
 
 
@@ -61,6 +83,10 @@ Future<void> initializeDependencies() async {
 
   sl.registerLazySingleton<WithdrawRepository>(
         () => WithdrawRepoImpl(sl()),
+  );
+
+  sl.registerLazySingleton<NotificationRepository>(
+        () => NotificationRepositoryImpl(sl()),
   );
 
   //TODO: Use cases
@@ -79,10 +105,16 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => UpdateWithdrawRequestStatusUseCase(sl()));
   sl.registerLazySingleton(() => DeleteTransactionUseCase(sl()));
   sl.registerLazySingleton(() => DeleteUserUseCase(sl()));
+  sl.registerLazySingleton(() => AddNotificationUseCase(sl()));
+  sl.registerLazySingleton(() => SendNotificationUseCase(sl()));
+  sl.registerLazySingleton(() => MarkNotificationAsReadUseCase(sl()));
+  sl.registerLazySingleton(() => MarkAllNotificationsAsReadUseCase(sl()));
+  sl.registerLazySingleton(() => FetchUserNotificationsUseCase(sl()));
+  sl.registerLazySingleton(() => FetchAllNotificationsUseCase(sl()));
+  sl.registerLazySingleton(() => GetWithdrawRequestsStreamUseCase(sl()));
 
-  // sl.registerLazySingleton(() => CreateWithdrawRequestUseCase(sl()));
 
-
+  //TODO: Cubits
   sl.registerFactory(() => UserCubit(
     fetchUserDataUseCase: sl(),
     updateUserUseCase: sl(),
@@ -101,5 +133,17 @@ Future<void> initializeDependencies() async {
     fetchAllWithdrawsUseCase: sl(),
     updateWithdrawRequestStatusUseCase: sl(),
     userCubit: sl(),
+    notificationService: sl(),
+    sendNotificationUseCase: sl(),
+    getWithdrawRequestsStreamUseCase: sl(),
+  ));
+
+  sl.registerFactory(() => NotificationCubit(
+    fetchUserNotificationsUseCase: sl(),
+    fetchAllNotificationsUseCase: sl(),
+    markNotificationAsReadUseCase: sl(),
+    markAllNotificationsAsReadUseCase: sl(),
+    addNotificationUseCase: sl(),
+    sendNotificationUseCase: sl(),
   ));
 }

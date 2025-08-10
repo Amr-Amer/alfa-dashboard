@@ -76,7 +76,8 @@ class UserCubit extends Cubit<UserState> {
             displayName: '',
             emailVerified: false,
             phoneNumber: '',
-            status: UserStatus.active
+            status: UserStatus.active,
+            fcmToken: ''
         )
     );
     result.fold(

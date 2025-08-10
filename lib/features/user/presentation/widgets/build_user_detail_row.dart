@@ -36,13 +36,13 @@ class BuildUserDetailRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Row(
                 children: [
-                  buildDetailsCell(user.displayName, 1),
-                  buildDetailsCell(user.email, 1),
+                  buildDetailsCell(user.displayName, 2),
+                  buildDetailsCell(user.email, 2),
                   buildDetailsCell('${user.balance} ${GlobalFun.getCurrencyAr(user.currency ?? '')}', 1),
                   buildDetailsCell(GlobalFun.getCountryAr(user.currency ?? ''), 1),
                   BuildUserStatusDropdown(user: user),
-                  buildDetailsCell(user.phoneNumber, 1),
-                  buildDetailsCell(user.address ?? '', 1),
+                  // buildDetailsCell(user.phoneNumber, 1),
+                  // buildDetailsCell(user.address ?? '', 1),
                   buildDeleteCell(1, user.uid, context)
                 ],
               ),
@@ -55,6 +55,7 @@ class BuildUserDetailRow extends StatelessWidget {
 
   Widget buildDetailsCell(String text, int flex,) {
     return Expanded(
+        flex: flex,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

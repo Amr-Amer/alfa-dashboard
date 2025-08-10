@@ -3,10 +3,10 @@ import 'package:alfa_dashboard/utils/constants.dart';
 
 class GradientIcon extends StatelessWidget {
 
-  IconData icon;
-  double size;
+  final IconData icon;
+  final double size;
 
-  GradientIcon({super.key,required this.icon,required this.size});
+  const GradientIcon({super.key,required this.icon,required this.size});
 
   @override
   Widget build(BuildContext context) {

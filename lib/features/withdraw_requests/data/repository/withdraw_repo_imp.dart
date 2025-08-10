@@ -5,6 +5,7 @@ import 'package:alfa_dashboard/features/withdraw_requests/data/data_sources/with
 import 'package:alfa_dashboard/features/withdraw_requests/domain/repository/withdraw_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 
 class WithdrawRepoImpl implements WithdrawRepository {
   final WithdrawRequestsRemoteDataSource remoteDataSource;
@@ -22,9 +23,16 @@ class WithdrawRepoImpl implements WithdrawRepository {
       await remoteDataSource.updateWithdrawRequestStatus(transaction);
       return right(transaction);
     } catch (e) {
-      print( "Error: $e");
+      if (kDebugMode) {
+        print( "Error: $e");
+      }
       return left(ErrorFactory.fromFirebaseError(e as FirebaseException));
     }
+  }
+
+  @override
+  Stream<List<TransactionModel>> getWithdrawRequestsStream() {
+    return remoteDataSource.getWithdrawRequestsStream();
   }
 }
 
