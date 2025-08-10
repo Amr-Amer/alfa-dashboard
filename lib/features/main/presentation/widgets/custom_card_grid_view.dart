@@ -1,5 +1,6 @@
 import 'package:alfa_dashboard/core/models/main_card_model.dart';
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
+import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_state.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
@@ -27,7 +28,7 @@ class CustomCardGridView extends StatelessWidget {
       builder: (context, state) {
         final totalUsers = users.length;
         final totalTransactions = transactions.length;
-        final totalWithdrawRequests = withdrawRequests.length;
+        final totalWithdrawRequests = transactions.where((request) => request.status == TransactionStatus.pending).toList().length;
 
         final List<MainCardModel> cards = [
           MainCardModel(
