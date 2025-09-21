@@ -36,7 +36,6 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
     required this.getWithdrawRequestsStreamUseCase,
   }) : super(WithdrawRequestsInitial()) {
     setupWithdrawRequestsStream();
-    userCubit.fetchUserData();
   }
 
   String selectedStatus = 'all';

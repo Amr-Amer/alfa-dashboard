@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
-import 'package:alfa_dashboard/core/usecase/use_case.dart';
-import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/delete_user_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_stream_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
@@ -30,7 +28,7 @@ class UserCubit extends Cubit<UserState> {
     required this.fetchAllUSersStreamUseCase
   }) : super(UserInitial()) {
     fetchAllUsersStream();
-    fetchUserData();
+    // fetchUserData();
   }
 
 
@@ -62,24 +60,22 @@ class UserCubit extends Cubit<UserState> {
     return super.close();
   }
 
-
-
-  Future<void> fetchUserData() async {
-    emit(UserLoading());
-    final result = await fetchUserDataUseCase.call(NoParams());
-
-    result.fold(
-          (error) => emit(UserError(error.message)),
-          (userData) {
-            userModel = userData;
-        emit(UserLoaded(user!));
-      },
-    );
-    if (kDebugMode) {
-      print("user data.................... ");
-      print(user);
-    }
-  }
+  // Future<void> fetchUserData() async {
+  //   emit(UserLoading());
+  //   final result = await fetchUserDataUseCase.call(NoParams());
+  //
+  //   result.fold(
+  //         (error) => emit(UserError(error.message)),
+  //         (userData) {
+  //           userModel = userData;
+  //       emit(UserLoaded(user!));
+  //     },
+  //   );
+  //   if (kDebugMode) {
+  //     print("user data.................... ");
+  //     print(user);
+  //   }
+  // }
 
   //   Future<void> fetchAllUsers() async {
   //     emit(UserLoading());
@@ -105,7 +101,7 @@ class UserCubit extends Cubit<UserState> {
     final user = usersList.firstWhere((u) => u.uid == uid);
 
     final updatedUser = user.copyWith(
-      balance: (user.balance ?? 0) + amount,
+      balance: (user.balance) + amount,
     );
 
     final result = await updateUserBalanceUseCase.call(updatedUser);
