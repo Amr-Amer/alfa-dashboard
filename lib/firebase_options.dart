@@ -21,11 +21,20 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         return windows;
       case TargetPlatform.linux:
@@ -41,50 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAVxlS3v43b1wfFpMPJp8IKiPMdzs4_Fdg',
-    appId: '1:883588472994:web:6421ec616b0afeb90677fb',
-    messagingSenderId: '883588472994',
-    projectId: 'money-transfer-23db8',
-    authDomain: 'money-transfer-23db8.firebaseapp.com',
-    storageBucket: 'money-transfer-23db8.firebasestorage.app',
-    measurementId: 'G-ZVPVXJRNK2',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCU8tqIGgK6BKCtnLKvGp3Qn7Btf14qDws',
-    appId: '1:883588472994:android:5e30f9bced12a62f0677fb',
-    messagingSenderId: '883588472994',
-    projectId: 'money-transfer-23db8',
-    storageBucket: 'money-transfer-23db8.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB1EiRe4AarEnfQ3l-rF3tWc0n0FJ9s6s8',
-    appId: '1:883588472994:ios:cce9e9570b9e238c0677fb',
-    messagingSenderId: '883588472994',
-    projectId: 'money-transfer-23db8',
-    storageBucket: 'money-transfer-23db8.firebasestorage.app',
-    iosClientId: '883588472994-b0kn6ovn7sjhco1qfidnrujl5hmmt3ad.apps.googleusercontent.com',
-    iosBundleId: 'com.example.alfaDashboard',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB1EiRe4AarEnfQ3l-rF3tWc0n0FJ9s6s8',
-    appId: '1:883588472994:ios:cce9e9570b9e238c0677fb',
-    messagingSenderId: '883588472994',
-    projectId: 'money-transfer-23db8',
-    storageBucket: 'money-transfer-23db8.firebasestorage.app',
-    iosClientId: '883588472994-b0kn6ovn7sjhco1qfidnrujl5hmmt3ad.apps.googleusercontent.com',
-    iosBundleId: 'com.example.alfaDashboard',
+    apiKey: 'AIzaSyCIT385bPUe44acsXBE71Jxe0rr0tCZBzE',
+    appId: '1:104319421446:web:6e17aae8d42fdbdf088787',
+    messagingSenderId: '104319421446',
+    projectId: 'alfa7-fddee',
+    authDomain: 'alfa7-fddee.firebaseapp.com',
+    storageBucket: 'alfa7-fddee.firebasestorage.app',
+    measurementId: 'G-PJN79PWQN8',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAVxlS3v43b1wfFpMPJp8IKiPMdzs4_Fdg',
-    appId: '1:883588472994:web:df67bb5ecbc5e3080677fb',
-    messagingSenderId: '883588472994',
-    projectId: 'money-transfer-23db8',
-    authDomain: 'money-transfer-23db8.firebaseapp.com',
-    storageBucket: 'money-transfer-23db8.firebasestorage.app',
-    measurementId: 'G-DHTW2BQPH5',
+    apiKey: 'AIzaSyCIT385bPUe44acsXBE71Jxe0rr0tCZBzE',
+    appId: '1:104319421446:web:2e8b599915a92a2f088787',
+    messagingSenderId: '104319421446',
+    projectId: 'alfa7-fddee',
+    authDomain: 'alfa7-fddee.firebaseapp.com',
+    storageBucket: 'alfa7-fddee.firebasestorage.app',
+    measurementId: 'G-6HY1JT1MGY',
   );
 }

@@ -77,4 +77,9 @@ class UserRepositoryImp implements UserRepository {
      return left(ErrorFactory.unKnownError());
    }
   }
+
+  @override
+  Stream<List<UserModel>> fetchAllUsersStream() {
+    return authFireStoreDataSource.fetchAllUsersStream();
+  }
 }

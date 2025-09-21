@@ -14,7 +14,10 @@ abstract class TransactionsRemoteDataSource {
 
   Future<Either<ErrorModel, List<TransactionModel>>> fetchAllTransactions();
 
-  Future<Either<ErrorModel, Unit>> deleteTransaction(String transactionId);
+  Stream<List<TransactionModel>> fetchAllTransactionsStream();
+
+  Future<void> deleteTransaction(String transId);
+
 }
 
 
@@ -76,15 +79,19 @@ class TransactionsRemoteDataSourceImpl implements TransactionsRemoteDataSource {
   }
 
   @override
-  Future<Either<ErrorModel, Unit>> deleteTransaction(String transactionId) async {
-    try {
-      final ref = firestore.collection(FirebaseConstants.transCollection).doc(transactionId);
-      await ref.delete();
-      return right(unit);
-    } on FirebaseException catch (e) {
-      return left(ErrorFactory.fromFirebaseError(e));
-    } catch (e) {
-      return left(ErrorModel(message: 'Unexpected error occurred', code: 'UNKNOWN_ERROR'));
-    }
+  Stream<List<TransactionModel>>fetchAllTransactionsStream() {
+    return firestore
+        .collection(FirebaseConstants.transCollection)
+        .orderBy(FirebaseConstants.createdAt, descending: true)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      return snapshot.docs.map((doc) => TransactionModel.fromMap(doc.data())).toList();
+    });
   }
+
+  @override
+  Future<void> deleteTransaction(String transId) {
+    return firestore.collection(FirebaseConstants.transCollection).doc(transId).delete();
+  }
+
 }

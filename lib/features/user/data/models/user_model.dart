@@ -59,13 +59,16 @@ class UserModel extends UserEntity {
       phoneNumber: data[FirebaseConstants.phoneNumber] ?? '',
       address: data[FirebaseConstants.address],
       balance: (data[FirebaseConstants.balance] as num?)?.toDouble() ?? 0.0,
-      totalEarnings: (data[FirebaseConstants.totalEarnings] as num?)?.toDouble(),
+      totalEarnings: (data[FirebaseConstants.totalEarnings] as num?)
+          ?.toDouble(),
       currency: data[FirebaseConstants.currency] ?? 'EGP',
       createdAt: (data[FirebaseConstants.createdAt] as Timestamp?)?.toDate(),
       updatedAt: (data[FirebaseConstants.updatedAt] as Timestamp?)?.toDate(),
       languageCode: data[FirebaseConstants.languageCode],
-      notificationsEnabled: data[FirebaseConstants.notificationsEnabled] ?? true,
-      status: UserStatusExtension.fromString(data[FirebaseConstants.status] ?? UserStatus.active.name),
+      notificationsEnabled: data[FirebaseConstants.notificationsEnabled] ??
+          true,
+      status: UserStatusExtension.fromString(
+          data[FirebaseConstants.status] ?? UserStatus.active.name),
       isAdmin: data[FirebaseConstants.isAdmin] ?? false,
       fcmToken: data[FirebaseConstants.fcmToken] ?? '',
     );
@@ -84,8 +87,10 @@ class UserModel extends UserEntity {
       FirebaseConstants.balance: balance,
       FirebaseConstants.totalEarnings: totalEarnings,
       FirebaseConstants.currency: currency,
-      FirebaseConstants.createdAt: createdAt != null ? Timestamp.fromDate(createdAt!) : null,
-      FirebaseConstants.updatedAt: updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
+      FirebaseConstants.createdAt: createdAt != null ? Timestamp.fromDate(
+          createdAt!) : null,
+      FirebaseConstants.updatedAt: updatedAt != null ? Timestamp.fromDate(
+          updatedAt!) : null,
       FirebaseConstants.languageCode: languageCode,
       FirebaseConstants.notificationsEnabled: notificationsEnabled,
       FirebaseConstants.status: status.name,
@@ -114,46 +119,79 @@ class UserModel extends UserEntity {
     String? fcmToken
   }) {
     return UserModel(
-      uid: uid ?? this.uid,
-      email: email ?? this.email,
-      displayName: displayName ?? this.displayName,
-      photoURL: photoURL ?? this.photoURL,
-      emailVerified: emailVerified ?? this.emailVerified,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
-      address: address ?? this.address,
-      balance: balance ?? this.balance,
-      totalEarnings: totalEarnings ?? this.totalEarnings,
-      currency: currency ?? this.currency,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      languageCode: languageCode ?? this.languageCode,
-      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
-      status: status ?? this.status,
-      isAdmin: isAdmin ?? this.isAdmin,
-      fcmToken: fcmToken ?? this.fcmToken
+        uid: uid ?? this.uid,
+        email: email ?? this.email,
+        displayName: displayName ?? this.displayName,
+        photoURL: photoURL ?? this.photoURL,
+        emailVerified: emailVerified ?? this.emailVerified,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        address: address ?? this.address,
+        balance: balance ?? this.balance,
+        totalEarnings: totalEarnings ?? this.totalEarnings,
+        currency: currency ?? this.currency,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        languageCode: languageCode ?? this.languageCode,
+        notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+        status: status ?? this.status,
+        isAdmin: isAdmin ?? this.isAdmin,
+        fcmToken: fcmToken ?? this.fcmToken
     );
   }
 
   /// ✅ Convert back to Entity if needed
   UserEntity toEntity() {
     return UserEntity(
-      uid: uid,
-      email: email,
-      displayName: displayName,
-      photoURL: photoURL,
-      emailVerified: emailVerified,
-      phoneNumber: phoneNumber,
-      address: address,
-      balance: balance,
-      totalEarnings: totalEarnings,
-      currency: currency,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
-      languageCode: languageCode,
-      notificationsEnabled: notificationsEnabled,
-      status: status,
-      isAdmin: isAdmin,
-      fcmToken: fcmToken
+        uid: uid,
+        email: email,
+        displayName: displayName,
+        photoURL: photoURL,
+        emailVerified: emailVerified,
+        phoneNumber: phoneNumber,
+        address: address,
+        balance: balance,
+        totalEarnings: totalEarnings,
+        currency: currency,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        languageCode: languageCode,
+        notificationsEnabled: notificationsEnabled,
+        status: status,
+        isAdmin: isAdmin,
+        fcmToken: fcmToken
+    );
+  }
+
+  factory UserModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> doc) {
+    final data = doc.data();
+    if (data == null) {
+      throw StateError('Missing data for userId: ${doc.id}');
+    }
+
+    return UserModel(
+      uid: data[FirebaseConstants.uId] ?? doc.id,
+      email: data[FirebaseConstants.email] ?? '',
+      displayName: data[FirebaseConstants.displayName] ?? '',
+      photoURL: data[FirebaseConstants.photoURL],
+      emailVerified: data[FirebaseConstants.emailVerified] ?? false,
+      phoneNumber: data[FirebaseConstants.phoneNumber] ?? '',
+      address: data[FirebaseConstants.address],
+      balance: (data[FirebaseConstants.balance] as num?)?.toDouble() ?? 0.0,
+      totalEarnings:
+      (data[FirebaseConstants.totalEarnings] as num?)?.toDouble(),
+      currency: data[FirebaseConstants.currency] ?? 'EGP',
+      createdAt:
+      (data[FirebaseConstants.createdAt] as Timestamp?)?.toDate(),
+      updatedAt:
+      (data[FirebaseConstants.updatedAt] as Timestamp?)?.toDate(),
+      languageCode: data[FirebaseConstants.languageCode],
+      notificationsEnabled:
+      data[FirebaseConstants.notificationsEnabled] ?? true,
+      status: UserStatusExtension.fromString(
+        data[FirebaseConstants.status] ?? UserStatus.active.name,
+      ),
+      isAdmin: data[FirebaseConstants.isAdmin] ?? false,
+      fcmToken: data[FirebaseConstants.fcmToken] ?? '',
     );
   }
 }

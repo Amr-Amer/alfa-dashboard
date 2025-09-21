@@ -13,4 +13,6 @@ abstract class UserRepository {
   Future<Either<ErrorModel,UserModel>> updateUserBalance(UserModel user);
 
   Future<Either<ErrorModel,Unit>> deleteUser(String uid);
+
+  Stream<List<UserModel>> fetchAllUsersStream();
 }

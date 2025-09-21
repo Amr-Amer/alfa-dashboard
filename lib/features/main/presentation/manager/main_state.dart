@@ -1,6 +1,5 @@
 part of 'main_cubit.dart';
 
-@immutable
 sealed class MainState {}
 
 final class MainInitialState extends MainState {}

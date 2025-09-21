@@ -18,8 +18,8 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsers(),),
-        BlocProvider(create: (context) => sl<TransactionCubit>()..fetchAllTransactions(),),
+        BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsersStream(),),
+        BlocProvider(create: (context) => sl<TransactionCubit>()..fetchAllTransactionsStream(),),
         BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..setupWithdrawRequestsStream(),),
       ],
   child: SizedBox(

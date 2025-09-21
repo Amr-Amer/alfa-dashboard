@@ -153,12 +153,14 @@ class GlobalFun {
 
 UserModel? userModel;
 UserModel? get user => userModel;
+
 List<UserModel> usersList = [];
 List<UserModel> get users => usersList;
-List<TransactionModel> withdrawRequests = [];
-List<TransactionModel> get withdrawRequestsList => withdrawRequests;
-TransactionModel? transactionModel;
-TransactionModel? get transaction => transactionModel;
+
+List<TransactionModel> withdrawRequestsList = [];
+List<TransactionModel> get withdrawRequests => withdrawRequestsList;
+
+
 List<TransactionModel> transactionsList = [];
 List<TransactionModel> get transactions => transactionsList;
 

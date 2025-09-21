@@ -42,11 +42,11 @@ class WithdrawRequestsFilterSearch extends StatelessWidget {
                 style: TextStyle(
                   color: AppConstants.clrSmallText,),
                 items: const [
-                  DropdownMenuItem(value: 'all', child: Text('الكل')),
-                  DropdownMenuItem(value: 'completed', child: Text('ناجحة')),
-                  DropdownMenuItem(value: 'pending', child: Text('قيد المعالجة')),
-                  DropdownMenuItem(value: 'failed', child: Text('مرفوضة')),
-                  DropdownMenuItem(value: 'canceled', child: Text('ملغية')),
+                  DropdownMenuItem(value: 'all', child: Text(AppStrings.all)),
+                  DropdownMenuItem(value: 'completed', child: Text(AppStrings.completed)),
+                  DropdownMenuItem(value: 'pending', child: Text(AppStrings.pending)),
+                  DropdownMenuItem(value: 'failed', child: Text(AppStrings.failed)),
+                  DropdownMenuItem(value: 'canceled', child: Text(AppStrings.cancelled)),
                 ],
                 onChanged: (value) {
                   if (value != null) {

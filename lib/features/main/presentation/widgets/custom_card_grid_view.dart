@@ -29,6 +29,7 @@ class CustomCardGridView extends StatelessWidget {
         final totalUsers = users.length;
         final totalTransactions = transactions.length;
         final totalWithdrawRequests = transactions.where((request) => request.status == TransactionStatus.pending).toList().length;
+        // final totalWithdrawRequests = withdrawRequests.length;
 
         final List<MainCardModel> cards = [
           MainCardModel(
@@ -36,8 +37,8 @@ class CustomCardGridView extends StatelessWidget {
             subTitle: AppStrings.users,
             iconData: CupertinoIcons.group,
             count: totalUsers.toString(),
-            percentage: users.isEmpty ? '0%' : '+2%',
-            color: AppConstants.greenColor,
+            percentage: users.isEmpty ? '0%' : '100%',
+            color: users.isEmpty ? AppConstants.redColor : AppConstants.greenColor,
           ),
 
           MainCardModel(
@@ -45,16 +46,16 @@ class CustomCardGridView extends StatelessWidget {
             subTitle: AppStrings.transactions,
             iconData: HugeIcons.strokeRoundedExpander,
             count: totalTransactions.toString(),
-            percentage: '+2%',
-            color: AppConstants.greenColor,
+            percentage: transactions.isEmpty ? '0%' : '100%',
+            color: transactions.isEmpty ? AppConstants.redColor : AppConstants.greenColor,
           ),
         MainCardModel(
             title: AppStrings.totalWithdrawRequests,
             subTitle: AppStrings.withdrawRequests,
             iconData: HugeIcons.strokeRoundedAccess,
             count: totalWithdrawRequests.toString(),
-            percentage: '+2%',
-            color: AppConstants.greenColor,
+            percentage: totalWithdrawRequests == 0 ? '0%' : '100%',
+            color: totalWithdrawRequests.toString().isEmpty ? AppConstants.redColor : AppConstants.greenColor,
           )
         ];
 

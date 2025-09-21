@@ -108,10 +108,7 @@ class NotificationRemoteDataSourceImpl implements NotificationRemoteDataSource {
 
       // Update all unread notifications to read
       final batch = firestore.batch();
-      final notificationsRef = firestore
-          .collection(FirebaseConstants.usersCollection)
-          .doc(uid)
-          .collection(FirebaseConstants.notificationsCollection);
+
 
       for (var doc in querySnapshot.docs) {
         batch.update(doc.reference, {FirebaseConstants.notificationRead: true});

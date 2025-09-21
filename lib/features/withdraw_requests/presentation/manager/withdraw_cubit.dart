@@ -8,13 +8,16 @@ import 'package:alfa_dashboard/features/notifications/presentation/services/send
 import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_type.dart';
+import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
+import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/fetch_all_withdraws_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/get_eithdraw_requests_stream_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/domain/usecases/update_withdraw_request_status_usecase.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_state.dart';
+import 'package:alfa_dashboard/utils/app_strings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
   final FetchAllWithdrawsUseCase fetchAllWithdrawsUseCase;
@@ -31,8 +34,10 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
     required this.notificationService,
     required this.sendNotificationUseCase,
     required this.getWithdrawRequestsStreamUseCase,
-  })
-      : super(WithdrawRequestsInitial());
+  }) : super(WithdrawRequestsInitial()) {
+    setupWithdrawRequestsStream();
+    userCubit.fetchUserData();
+  }
 
   String selectedStatus = 'all';
 
@@ -45,10 +50,12 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
           (either) {
         either.fold(
               (failure) => emit(WithdrawRequestsError(failure.message)),
-              (transactions) {
-                withdrawRequests.clear();
-            withdrawRequests = transactions;
-            emit(WithdrawRequestsLoaded(transactions));
+              (result) {
+            withdrawRequestsList = result;
+            emit(WithdrawRequestsLoaded(withdrawRequests));
+            if (kDebugMode) {
+              print("withdrawRequests data.................... ${withdrawRequests.length}");
+            }
           },
         );
       },
@@ -74,17 +81,39 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
       emit(WithdrawRequestsUpdating());
 
       if (newStatus == TransactionStatus.completed.name) {
-        final userBalance = user?.balance ?? 0;
+
+        final user = usersList.firstWhere(
+              (u) => u.uid == userId,
+          orElse: () => UserModel(
+            uid: '',
+            balance: 0,
+            email: '',
+            displayName: '',
+            emailVerified: false,
+            phoneNumber: '',
+            status: UserStatus.active,
+            fcmToken: '',
+          ),
+        );
+
+        final userBalance = user.balance;
+
+        if (kDebugMode) {
+          print("userBalance: $userBalance");
+        }
+
         if (userBalance <= 100) {
-          onError('لا يمكن إتمام السحب، رصيد المستخدم أقل من أو يساوي 100');
+          onError(AppStrings.userBalanceError);
           emit(WithdrawRequestsLoaded(withdrawRequests));
           return;
         }
       }
 
+
       final updated = transaction.copyWith(
         status: TransactionStatusExt.fromString(newStatus),
         adminNote: adminNote ?? transaction.adminNote,
+        updatedAt: DateTime.now(),
       );
 
       final result = await updateWithdrawRequestStatusUseCase.call(updated);
@@ -105,7 +134,7 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
             status: newStatus,
             amount: transaction.amount,
             userName: transaction.userName,
-            note: transaction.note,
+            note: adminNote ?? transaction.adminNote,
           );
 
           await setupWithdrawRequestsStream();
@@ -113,7 +142,7 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
         },
       );
     } catch (e) {
-      const errorMsg = 'حدث خطأ أثناء تحديث الحالة';
+      const errorMsg = AppStrings.updateStatusError;
       emit(WithdrawRequestsError(errorMsg));
       onError(errorMsg);
     }
@@ -130,14 +159,14 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
   }) async {
     final statusText = GlobalFun.getStatusAr(TransactionStatusExt.fromString(status));
 
-    final title = 'تحديث حالة طلب السحب';
+    final title = AppStrings.updateWithdrawStatus;
 
     String body;
     if (status == TransactionStatus.completed.name) {
       body = 'تم تحويل مبلغ $amount إلى حسابك بنجاح';
     } else {
-      final finalNote = note.trim().isEmpty ? 'لم يتم إدخال ملاحظات' : note;
-      body = 'تم تغيير حالة طلب السحب إلى $statusText\n$finalNote';
+      final finalNote = note.trim().isEmpty ? AppStrings.noNoteAdded : note;
+      body = '$statusText\n$finalNote';
     }
 
     final notification = NotificationModel(
@@ -172,12 +201,11 @@ class WithdrawRequestsCubit extends Cubit<WithdrawRequestsState> {
     );
   }
 
-
-
-
   void searchWithdrawRequests(String query) {
     if (query.isNotEmpty) {
-      final filteredTransactions = withdrawRequests.where((transaction) => transaction.type.name.contains(query.toLowerCase())).toList();
+      final filteredTransactions = withdrawRequests.where((transaction) {
+        return transaction.id.toString().contains(query);
+      }).toList();
       emit(WithdrawRequestsLoaded(filteredTransactions));
     } else {
       emit(WithdrawRequestsLoaded(withdrawRequests));

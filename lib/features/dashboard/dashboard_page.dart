@@ -23,7 +23,7 @@ class _DashboardPageState extends State<DashboardPage> {
     MainPage(scaffoldKey: GlobalKey()),
     UsersPage(scaffoldKey: GlobalKey()),
     TransactionsPage(scaffoldKey: GlobalKey()),
-    WithdrawRequestsScreen(),
+    WithdrawRequestsScreen( scaffoldKey: GlobalKey(),),
     NotificationsPage(scaffoldKey: GlobalKey()),
   ];
 

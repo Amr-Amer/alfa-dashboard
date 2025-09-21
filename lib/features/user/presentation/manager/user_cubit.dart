@@ -1,15 +1,17 @@
+import 'dart:async';
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
+import 'package:alfa_dashboard/core/usecase/use_case.dart';
 import 'package:alfa_dashboard/features/user/domain/entities/user_status.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/delete_user_usecase.dart';
+import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_stream_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_user_data_usecse.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_balance_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_data_usecase.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_state.dart';
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
-import 'package:alfa_dashboard/core/usecase/use_case.dart';
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UserCubit extends Cubit<UserState> {
@@ -18,68 +20,96 @@ class UserCubit extends Cubit<UserState> {
   final FetchAllUSersUseCase fetchAllUSersUseCase;
   final UpdateUserBalanceUseCase updateUserBalanceUseCase;
   final DeleteUserUseCase deleteUserUseCase;
-
+  final FetchAllUSersStreamUseCase  fetchAllUSersStreamUseCase;
   UserCubit({
     required this.fetchUserDataUseCase,
     required this.updateUserUseCase,
     required this.fetchAllUSersUseCase,
     required this.updateUserBalanceUseCase,
-    required this.deleteUserUseCase
+    required this.deleteUserUseCase,
+    required this.fetchAllUSersStreamUseCase
   }) : super(UserInitial()) {
-    fetchAllUsers();
+    fetchAllUsersStream();
+    fetchUserData();
   }
 
 
   final TextEditingController balanceController = TextEditingController();
+  StreamSubscription? _usersSubscription;
 
-  // Future<void> fetchUserData() async {
-  //   emit(UserLoading());
-  //   final result = await fetchUserDataUseCase.call(NoParams());
-  //
-  //   result.fold(
-  //         (error) => emit(UserError(error.message)),
-  //         (userData) {
-  //       userModel = userData;
-  //       emit(UserLoaded(userData));
-  //     },
-  //   );
-  //   if (kDebugMode) {
-  //     print("user data.................... ");
-  //     print(user);
-  //   }
-  // }
+  void fetchAllUsersStream() {
+    emit(UserLoading());
+    _usersSubscription?.cancel();
+    _usersSubscription = fetchAllUSersStreamUseCase().listen(
+          (either) {
+        either.fold(
+              (failure) => emit(UserError(failure.message)),
+              (userData) {
+                usersList = userData;
+            emit(AllUsersLoaded(users));
+          },
+        );
+        if (kDebugMode) {
+          print("user data.................... ${users.length}");
+        }
+      },
+    );
+  }
 
-    Future<void> fetchAllUsers() async {
-      emit(UserLoading());
-      final result = await fetchAllUSersUseCase.call(NoParams());
+  @override
+  Future<void> close() {
+    _usersSubscription?.cancel();
+    return super.close();
+  }
 
-      result.fold(
-            (error) => emit(UserError(error.message)),
-            (userData) {
-              usersList = userData;
-          emit(AllUsersLoaded(userData));
-        },
-      );
-      if (kDebugMode) {
-        print("all users data.................... ");
-        print(user);
-      }
+
+
+  Future<void> fetchUserData() async {
+    emit(UserLoading());
+    final result = await fetchUserDataUseCase.call(NoParams());
+
+    result.fold(
+          (error) => emit(UserError(error.message)),
+          (userData) {
+            userModel = userData;
+        emit(UserLoaded(user!));
+      },
+    );
+    if (kDebugMode) {
+      print("user data.................... ");
+      print(user);
     }
+  }
+
+  //   Future<void> fetchAllUsers() async {
+  //     emit(UserLoading());
+  //     final result = await fetchAllUSersUseCase.call(NoParams());
+  //
+  //     result.fold(
+  //           (error) => emit(UserError(error.message)),
+  //           (userData) {
+  //             usersList = userData;
+  //         emit(AllUsersLoaded(userData));
+  //       },
+  //     );
+  //     if (kDebugMode) {
+  //       print("all users data.................... ");
+  //       print(user);
+  //     }
+  //   }
+
 
   Future<void> updateUserBalance(double amount, String uid) async {
     emit(UserUpdateLoading());
-    final result = await updateUserBalanceUseCase.call(
-        UserModel(
-            uid: uid,
-            balance: amount,
-            email: '',
-            displayName: '',
-            emailVerified: false,
-            phoneNumber: '',
-            status: UserStatus.active,
-            fcmToken: ''
-        )
+
+    final user = usersList.firstWhere((u) => u.uid == uid);
+
+    final updatedUser = user.copyWith(
+      balance: (user.balance ?? 0) + amount,
     );
+
+    final result = await updateUserBalanceUseCase.call(updatedUser);
+
     result.fold(
           (error) => emit(UserError(error.message)),
           (userData) {
@@ -90,6 +120,7 @@ class UserCubit extends Cubit<UserState> {
   }
 
 
+
   Future<void> updateUserData(UserModel user) async {
     emit(UserUpdateLoading());
     final result = await updateUserUseCase.call(user);
@@ -98,7 +129,7 @@ class UserCubit extends Cubit<UserState> {
           (error) => emit(UserUpdateError(error.message)),
           (userData)async {
             userModel = userData;
-           await fetchAllUsers();
+            fetchAllUSersStreamUseCase();
         emit(AllUsersLoaded(usersList));
       },
     );
@@ -111,7 +142,7 @@ class UserCubit extends Cubit<UserState> {
     result.fold(
           (error) => emit(UserUpdateError(error.message)),
           (_)async {
-           await fetchAllUsers();
+            fetchAllUsersStream();
         emit(AllUsersLoaded(usersList));
       },
     );

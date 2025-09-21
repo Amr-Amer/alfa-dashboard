@@ -32,6 +32,7 @@ class AppStrings {
   static const String transactionTime = 'وقت المعاملة';
   static const String currency = 'العملة';
   static const String createdAt = 'تاريخ الانشاء';
+  static const String updatedAt = 'تم التحديث في';
   static const String userId = 'رقم المستخدم';
   static const String active = 'نشط';
   static const String inactive = 'غير نشط';
@@ -101,4 +102,15 @@ class AppStrings {
   static const String statusRequired = 'حالة المعاملة مطلوبة';
   static const String selectUser = 'اختر المستخدم';
   static const String add = 'اضافة';
+  static const String transactionAddedSuccessfully = "تم إضافة التحويل بنجاح";
+  static const String noteRequired = "يجب كتابة الملاحظة قبل تغيير الحالة";
+  static const String amountNotValid = "الرجاء إدخال رقم صحيح";
+  static const String updateBalance = "تحديث الرصيد";
+  static const String updateWithdrawStatus = "تحديث حالة طلب السحب";
+  static const String noNoteAdded = "لم يتم إدخال ملاحظات";
+  static const String userBalanceError = 'لا يمكن إتمام السحب، رصيد المستخدم أقل من أو يساوي 100';
+  static const String updateStatusError = 'حدث خطأ أثناء تحديث الحالة';
+  static const String hasFcmToken = "لديه توكين الأشعارات";
+  static const String yes = "نعم";
+  static const String no = "لأ";
 }

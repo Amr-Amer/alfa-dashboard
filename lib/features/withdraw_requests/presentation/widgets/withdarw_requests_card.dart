@@ -1,7 +1,6 @@
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
 import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
-import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_state.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
@@ -39,59 +38,6 @@ class WithdrawsRequestsCard extends StatelessWidget {
   }
 
   Widget bottomData(BuildContext context) {
-    // return
-    //   BlocBuilder<WithdrawRequestsCubit, WithdrawRequestsState>(
-    //     builder: (context, state) {
-    //       return Container(
-    //         width: 1500,
-    //         decoration: BoxDecoration(
-    //             color: AppConstants.clrBoxBackground,
-    //             boxShadow: [
-    //               BoxShadow(color: Color(0xff333333), spreadRadius: 1)
-    //             ],
-    //             borderRadius: BorderRadius.all(Radius.circular(10))),
-    //         child: Column(
-    //           children: [
-    //             Container(
-    //               decoration: BoxDecoration(
-    //                   color: AppConstants.clrBoxBackground,
-    //                   boxShadow: [
-    //                     BoxShadow(color: Color(0xff333333), spreadRadius: 1)
-    //                   ],
-    //                   borderRadius: BorderRadius.all(Radius.circular(10))),
-    //               padding: EdgeInsets.all(
-    //                   !Responsive.isMobile(context) ? 20 : 10),
-    //               child: Row(
-    //                 children: [
-    //                   buildHeaderCell(
-    //                       Icons.numbers, AppStrings.transactionNumbers, 1),
-    //                   buildHeaderCell(Icons.people, AppStrings.userName, 1),
-    //                   buildHeaderCell(Icons.account_balance_sharp,
-    //                       AppStrings.transactionType, 1),
-    //                   buildHeaderCell(
-    //                       Icons.payment, AppStrings.transactionMethod, 2),
-    //                   buildHeaderCell(Icons.info_outline, AppStrings.status, 1),
-    //                   buildHeaderCell(Icons.account_balance_wallet,
-    //                       AppStrings.transactionAmount, 1),
-    //                   buildHeaderCell(
-    //                       Icons.note_alt_outlined, AppStrings.transactionNotes,
-    //                       1),
-    //                   buildHeaderCell(
-    //                       Icons.av_timer_rounded, AppStrings.transactionTime,
-    //                       1),
-    //                 ],
-    //               ),
-    //             ),
-    //             // ...detailsList.map((detail) => _buildDetailRow(detail))
-    //             ...state is WithdrawRequestsLoaded
-    //                 ? state.transactions.map((detail) =>
-    //                 _buildDetailRow(detail, context)).toList()
-    //                 : [],
-    //           ],
-    //         ),
-    //       );
-    //     },
-    //   );
     return BlocConsumer<WithdrawRequestsCubit, WithdrawRequestsState>(
       listener: (context, state) {
         if (state is WithdrawRequestsError) {
@@ -250,7 +196,6 @@ class WithdrawsRequestsCard extends StatelessWidget {
 
   Widget _buildNoteDialog(String initialNote, {required BuildContext context}) {
     final controller = TextEditingController(text: initialNote);
-
     return AlertDialog(
       title: Text(AppStrings.inputNote),
       content: SingleChildScrollView(
@@ -307,39 +252,40 @@ class WithdrawsRequestsCard extends StatelessWidget {
                   style: TextStyle(
                       color: AppConstants.clrBigText, fontSize: 13),
                 ),
-              )).toList(),
+              ))
+              .toList(),
           onChanged: (newStatus) async {
             if (newStatus != null && newStatus != currentStatus) {
               String note = '';
 
               if (newStatus == TransactionStatus.completed.name) {
-                note = "تم إضافة التحويل بنجاح";
+                note = AppStrings.transactionAddedSuccessfully;
               } else {
                 final result = await showDialog<String>(
                   context: context,
-                  builder: (_) => _buildNoteDialog(transaction.adminNote, context: context),
+                  builder: (_) =>
+                      _buildNoteDialog(transaction.adminNote, context: context),
                 );
 
                 if (result == null || result.trim().isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("يجب كتابة الملاحظة قبل تغيير الحالة")),
+                    SnackBar(content: Text(AppStrings.noteRequired)),
                   );
                   return;
                 }
-
                 note = result.trim();
               }
 
               context.read<WithdrawRequestsCubit>().changeWithdrawStatus(
-                userToken: transaction.userToken,
-                // userToken: "evqepKZqRniOO4pYsBzeZY:APA91bEjSBl1P1Ht8J-0G-vMDzn_xOwFeShJ9TjmExur9AdfGniLhtPG7SSjZFzUtEltva2TCEF5WdOALrvXo8gFuQkAer45CfNYztWNAsJaZO-r2wuNqnM",
                 transaction,
                 newStatus,
                 userId: transaction.uid,
+                userToken: transaction.userToken,
                 adminNote: note,
                 onError: (msg) {
                   if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(msg)));
                   }
                   if (kDebugMode) {
                     print("userID ${transaction.uid}");
@@ -348,7 +294,6 @@ class WithdrawsRequestsCard extends StatelessWidget {
               );
             }
           },
-
         ),
       ),
     );

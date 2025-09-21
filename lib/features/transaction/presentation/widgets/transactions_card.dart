@@ -65,6 +65,7 @@ class TransactionsCard extends StatelessWidget {
                       buildHeaderCell(Icons.account_balance_wallet, AppStrings.transactionAmount, 1),    // Transaction Amount
                       // buildHeaderCell(Icons.note_alt_outlined, AppStrings.transactionNotes, 1),     // Transaction Notes
                       buildHeaderCell(Icons.av_timer_rounded, AppStrings.transactionTime, 1), // Transaction Time
+                      buildHeaderCell(Icons.delete, AppStrings.delete, 1), // Transaction Time
                     ],
                   ),
                 ),
@@ -105,7 +106,8 @@ class TransactionsCard extends StatelessWidget {
                   buildDetailsCell(GlobalFun.getMethodAr(transaction.method), 1),
                   buildDetailsCell(GlobalFun.getStatusAr(transaction.status), 1),
                   buildDetailsCell('${transaction.amount}  ${GlobalFun.getCurrencyAr(transaction.currency)}',1),
-                  buildDetailsCell(GlobalFun.formatedDateTime(transaction.createdAt), 1),
+                  buildDetailsCell(GlobalFun.formatDate(transaction.createdAt), 1),
+                  buildDeleteCell(transaction.id, 1, context)
                 ],
               ),
             ),
@@ -130,6 +132,27 @@ class TransactionsCard extends StatelessWidget {
             preview,
             style: TextStyle(color: AppConstants.clrBigText, fontSize: 13),
             textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDeleteCell(String transactionId, int flex,BuildContext context) {
+
+    return Expanded(
+      flex: flex,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: AppConstants.redColor,
+            ),
+            onPressed: () async {
+              await context.read<TransactionCubit>().deleteTransaction(transactionId);
+            },
           ),
         ],
       ),
@@ -194,6 +217,7 @@ class TransactionsCard extends StatelessWidget {
               _buildDetailItem('${AppStrings.transactionNotes} :', transaction.note),
               _buildDetailItem('${AppStrings.adminNote} :', transaction.adminNote),
               _buildDetailItem('${AppStrings.createdAt} :', GlobalFun.formatedDateTime(transaction.createdAt)),
+              _buildDetailItem('${AppStrings.updatedAt} :', GlobalFun.formatedDateTime(transaction.updatedAt)),
             ],
           ),
         ),

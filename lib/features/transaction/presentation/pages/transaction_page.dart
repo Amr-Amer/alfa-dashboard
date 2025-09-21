@@ -17,7 +17,7 @@ class TransactionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (context) => sl<TransactionCubit>()..fetchAllTransactions(),
+        create: (context) => sl<TransactionCubit>()..fetchAllTransactionsStream(),
         child: Scaffold(
           body: BlocBuilder<TransactionCubit, TransactionState>(
             builder: (context, state) {
@@ -26,7 +26,7 @@ class TransactionsPage extends StatelessWidget {
               } else if (state is TransactionError) {
                 return TransactionErrorWidget(
                   message: state.message,
-                  onRetry: () => context.read<TransactionCubit>().fetchTransactions(),
+                  onRetry: () => context.read<TransactionCubit>().fetchAllTransactionsStream(),
                 );
               } else if (state is TransactionsLoaded) {
                 return Padding(

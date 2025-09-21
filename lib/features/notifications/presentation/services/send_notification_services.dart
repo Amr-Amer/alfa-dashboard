@@ -8,7 +8,7 @@ import 'package:googleapis_auth/auth_io.dart' as auth;
 
 Future<String> getAccessToken() async {
   final jsonString = await rootBundle.loadString(
-    'assets/notifications/money-transfer-23db8-c98e00f9b888.json',
+    'assets/notifications/alfa7-fddee-ecbce92685c6.json',
   );
 
   final accountCredentials =
@@ -27,7 +27,7 @@ Future<void> sendNotification(
       required Map<String, dynamic> data}) async {
   final String accessToken = await getAccessToken();
   final String fcmUrl =
-      'https://fcm.googleapis.com/v1/projects/money-transfer-23db8/messages:send';
+      'https://fcm.googleapis.com/v1/projects/alfa7-fddee/messages:send';
 
   final response = await http.post(
     Uri.parse(fcmUrl),

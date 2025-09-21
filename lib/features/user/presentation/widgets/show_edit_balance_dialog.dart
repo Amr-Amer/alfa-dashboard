@@ -1,4 +1,5 @@
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
+import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class ShowEditBalanceDialog extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ShowEditBalanceDialogState extends State<ShowEditBalanceDialog> {
       Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("الرجاء إدخال رقم صحيح")),
+        SnackBar(content: Text(AppStrings.amountNotValid)),
       );
     }
   }
@@ -42,23 +43,23 @@ class _ShowEditBalanceDialogState extends State<ShowEditBalanceDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("تعديل الرصيد"),
+      title: Text(AppStrings.updateBalance),
       content: TextField(
         controller: controller,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         decoration: InputDecoration(
-          labelText: "الرصيد الجديد",
+          labelText: AppStrings.newBalance,
           border: OutlineInputBorder(),
         ),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text("إلغاء"),
+          child: Text(AppStrings.cancel),
         ),
         ElevatedButton(
           onPressed: _saveBalance,
-          child: Text("حفظ"),
+          child: Text(AppStrings.save),
         ),
       ],
     );

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
 import 'package:alfa_dashboard/core/networking/firebase_error_factory.dart';
 import 'package:alfa_dashboard/core/networking/firebase_error_model.dart';
@@ -12,6 +14,7 @@ abstract class AuthFireStoreDataSource {
   Future<void> updateUser(UserModel user);
   Future<void> updateUserBalance(UserModel user);
   Future<void> deleteUser(String uid);
+  Stream<List<UserModel>> fetchAllUsersStream();
   }
 
 class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
@@ -26,6 +29,18 @@ class AuthFireStoreDataSourceImpl implements AuthFireStoreDataSource {
         .doc(user.uid)
         .set(user.toMap());
   }
+
+
+  @override
+  Stream<List<UserModel>> fetchAllUsersStream() {
+    return fireStore
+        .collection(FirebaseConstants.usersCollection)
+        .snapshots()
+        .asyncMap((snapshot) async {
+      return snapshot.docs.map((doc) => UserModel.fromFirestore(doc)).toList();
+    });
+  }
+
 
   @override
   Future<Either<ErrorModel, UserModel>> fetchUserData(String uid) async {

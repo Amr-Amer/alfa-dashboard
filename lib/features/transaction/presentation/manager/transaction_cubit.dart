@@ -1,73 +1,83 @@
+import 'dart:async';
+import 'package:alfa_dashboard/core/services/global/global_fun.dart';
 import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/delete_transaction_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_all_transaction_usecase.dart';
+import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_all_transactions_stream_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_user_transaction_usecase.dart';
-import 'package:alfa_dashboard/utils/app_strings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/services/global/global_fun.dart';
 part 'transaction_state.dart';
 
 class TransactionCubit extends Cubit<TransactionState> {
   final FetchUserTransactionUseCase fetchUserTransactionUseCase;
   final FetchAllTransactionUseCase fetchAllTransactionsUseCase;
   final DeleteTransactionUseCase deleteTransactionUseCase;
+  final FetchAllTransactionsStreamUseCase fetchAllTransactionsStreamUseCase;
 
-  TransactionCubit({required this.fetchUserTransactionUseCase, required this.fetchAllTransactionsUseCase, required this.deleteTransactionUseCase})
-      : super(TransactionInitial());
+  TransactionCubit({
+    required this.fetchUserTransactionUseCase,
+    required this.fetchAllTransactionsUseCase,
+    required this.deleteTransactionUseCase,
+    required this.fetchAllTransactionsStreamUseCase})
+      : super(TransactionInitial()) ;
 
   String selectedStatus = 'all';
   String selectedType = 'all';
   String selectedMethod = 'all';
 
-  Future<void> fetchTransactions() async {
+  StreamSubscription? _usersSubscription;
+
+  Future<void> fetchAllTransactionsStream()  async {
     emit(TransactionLoading());
-    final String? uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid == null) {
-      emit(TransactionError(AppStrings.userNotAuthenticated));
-      return;
-    }
-
-    final data = await fetchUserTransactionUseCase.call(uid);
-
-    data.fold(
-          (ifLeft) => emit(TransactionError(ifLeft.message)),
-          (ifRight) {
-        transactions.clear();
-        transactions.addAll(ifRight);
-        emit(TransactionsLoaded(transactions));
+    _usersSubscription?.cancel();
+    _usersSubscription = fetchAllTransactionsStreamUseCase().listen(
+          (either) {
+        either.fold(
+              (failure) => emit(TransactionError(failure.message)),
+              (result) {
+                transactionsList = result;
+            emit(TransactionsLoaded(transactions));
+                if (kDebugMode) {
+                  print("transaction data.................... ${transactions.length}");
+                }
+          },
+        );
       },
     );
   }
 
 
-  Future<void> fetchAllTransactions() async {
-    emit(TransactionLoading());
-
-    final data = await fetchAllTransactionsUseCase.call();
-
-    data.fold(
-          (ifLeft) => emit(TransactionError(ifLeft.message)),
-          (ifRight) {
-        transactions.clear();
-        transactions.addAll(ifRight);
-        emit(TransactionsLoaded(transactions));
-      },
-    );
+  @override
+  Future<void> close() {
+    _usersSubscription?.cancel();
+    return super.close();
   }
 
-  Future<bool> deleteTransaction(String id) async {
-    emit(TransactionDeleting(id));
-    try {
-      await deleteTransactionUseCase.call(id);
-      emit(TransactionDeleted(message: "تم الحذف بنجاح"));
-      return true;
-    } catch (e) {
-      emit(TransactionDeleteError("فشل في الحذف"));
-      return false;
-    }
+
+  // Future<void> deleteTransaction(String id) async {
+  //   final result = await deleteTransactionUseCase.call(id);
+  //
+  //   result.fold(
+  //         (error) => emit(TransactionError(error.message)),
+  //         (_) {
+  //       emit(TransactionDeleted(message: 'تم حذف المعاملة بنجاح'));
+  //     },
+  //   );
+  // }
+
+  Future<void> deleteTransaction(String uid) async {
+
+    final result = await deleteTransactionUseCase.call(uid);
+
+    result.fold(
+          (error) => emit(TransactionError(error.message)),
+          (_)async {
+        await fetchAllTransactionsStream();
+        emit(TransactionsLoaded(transactions));
+        emit(TransactionDeleted(message: 'تم حذف المعاملة بنجاح'));
+      },
+    );
   }
 
 

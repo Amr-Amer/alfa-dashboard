@@ -14,7 +14,7 @@ class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<UserCubit>()..fetchAllUsers(),
+      create: (context) => sl<UserCubit>()..fetchAllUsersStream(),
       child: SizedBox(
         height: MediaQuery
             .of(context)

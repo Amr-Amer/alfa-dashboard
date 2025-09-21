@@ -1,3 +1,4 @@
+import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/widgets/date_range_filter_widget.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/widgets/trnas_search_widget.dart';
@@ -46,10 +47,10 @@ class TransactionFilterSearch extends StatelessWidget {
                   color: AppConstants.clrSmallText,),
                 items: const [
                   DropdownMenuItem(value: 'all', child: Text(AppStrings.all)),
-                  DropdownMenuItem(value: 'completed', child: Text(AppStrings.completed)),
-                  DropdownMenuItem(value: 'pending', child: Text(AppStrings.pending)),
-                  DropdownMenuItem(value: 'failed', child: Text(AppStrings.failed)),
-                  DropdownMenuItem(value: 'canceled', child: Text(AppStrings.cancelled)),
+                  DropdownMenuItem(value: FirebaseConstants.completed, child: Text(AppStrings.completed)),
+                  DropdownMenuItem(value: FirebaseConstants.pending, child: Text(AppStrings.pending)),
+                  DropdownMenuItem(value: FirebaseConstants.failed, child: Text(AppStrings.failed)),
+                  DropdownMenuItem(value: FirebaseConstants.cancelled, child: Text(AppStrings.cancelled)),
                 ],
                 onChanged: (value) {
                   if (value != null) {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
 import 'package:alfa_dashboard/core/networking/firebase_error_factory.dart';
 import 'package:alfa_dashboard/core/networking/firebase_error_model.dart';
@@ -48,13 +49,24 @@ class WithdrawRequestsRemoteDataSourceImpl implements WithdrawRequestsRemoteData
     return firestore
         .collection(FirebaseConstants.transCollection)
         .where(
-        FirebaseConstants.transType, isEqualTo: TransactionType.withdraw.name)
+      FirebaseConstants.transType,
+      isEqualTo: TransactionType.withdraw.name,
+    )
         .where(FirebaseConstants.status, isEqualTo: FirebaseConstants.pending)
         .orderBy(FirebaseConstants.createdAt, descending: true)
         .snapshots()
-        .map((snapshot) =>
-        snapshot.docs.map((doc) => TransactionModel.fromFirestore(doc)).toList());
+        .transform(
+      StreamTransformer.fromHandlers(
+        handleData: (snapshot, sink) {
+          final transactions = snapshot.docs
+              .map((doc) => TransactionModel.fromFirestore(doc))
+              .toList();
+          Future.microtask(() => sink.add(transactions));
+        },
+      ),
+    );
   }
+
 
   @override
   Future<void> updateWithdrawRequestStatus(TransactionModel transaction) async {

@@ -1,5 +1,4 @@
 import 'package:alfa_dashboard/core/di/injection_container.dart';
-import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_state.dart';
 import 'package:alfa_dashboard/features/withdraw_requests/presentation/widgets/withdarw_requests_card.dart';
@@ -10,16 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WithdrawRequestsScreen extends StatelessWidget {
-  const WithdrawRequestsScreen({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  const WithdrawRequestsScreen({super.key, required this.scaffoldKey});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..setupWithdrawRequestsStream()),
-          BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsers()),
-        ],
+      child: BlocProvider(
+        create: (context) => sl<WithdrawRequestsCubit>(),
         child: Scaffold(
           body: BlocBuilder<WithdrawRequestsCubit, WithdrawRequestsState>(
             builder: (context, state) {

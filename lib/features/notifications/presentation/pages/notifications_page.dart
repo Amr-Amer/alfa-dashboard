@@ -24,9 +24,9 @@ class NotificationsPage extends StatelessWidget {
           BlocProvider(create: (context) =>
           sl<NotificationCubit>()
             ..fetchAllNotifications()),
-          BlocProvider(create: (context) =>
-          sl<UserCubit>()
-            ..fetchAllUsers()),
+          // BlocProvider(create: (context) =>
+          // sl<UserCubit>()
+          //   ..fetchAllUsers()),
         ],
         // create: (context) => sl<NotificationsCubit>()..fetchAllNotifications(),
         child: Scaffold(

@@ -15,12 +15,14 @@ import 'package:alfa_dashboard/features/transaction/data/repository/transaction_
 import 'package:alfa_dashboard/features/transaction/domain/repository/transaction_repository.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/delete_transaction_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_all_transaction_usecase.dart';
+import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_all_transactions_stream_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/domain/usecases/fetch_user_transaction_usecase.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
 import 'package:alfa_dashboard/features/user/data/data_sources/user_remote_data_source.dart';
 import 'package:alfa_dashboard/features/user/data/repositories/user_repo_imp.dart';
 import 'package:alfa_dashboard/features/user/domain/repositories/user_repo.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/delete_user_usecase.dart';
+import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_stream_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_all_users_usecase.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/fetch_user_data_usecse.dart';
 import 'package:alfa_dashboard/features/user/domain/use_cases/update_user_balance_usecase.dart';
@@ -105,6 +107,7 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => UpdateWithdrawRequestStatusUseCase(sl()));
   sl.registerLazySingleton(() => DeleteTransactionUseCase(sl()));
   sl.registerLazySingleton(() => DeleteUserUseCase(sl()));
+  sl.registerLazySingleton(() => FetchAllUSersStreamUseCase(sl()));
   sl.registerLazySingleton(() => AddNotificationUseCase(sl()));
   sl.registerLazySingleton(() => SendNotificationUseCase(sl()));
   sl.registerLazySingleton(() => MarkNotificationAsReadUseCase(sl()));
@@ -112,6 +115,7 @@ Future<void> initializeDependencies() async {
   sl.registerLazySingleton(() => FetchUserNotificationsUseCase(sl()));
   sl.registerLazySingleton(() => FetchAllNotificationsUseCase(sl()));
   sl.registerLazySingleton(() => GetWithdrawRequestsStreamUseCase(sl()));
+  sl.registerLazySingleton(() => FetchAllTransactionsStreamUseCase(sl()));
 
 
   //TODO: Cubits
@@ -121,12 +125,14 @@ Future<void> initializeDependencies() async {
     fetchAllUSersUseCase: sl(),
     updateUserBalanceUseCase: sl(),
     deleteUserUseCase: sl(),
+    fetchAllUSersStreamUseCase: sl(),
   ));
 
   sl.registerFactory(() => TransactionCubit(
     fetchUserTransactionUseCase: sl(),
     fetchAllTransactionsUseCase: sl(),
     deleteTransactionUseCase: sl(),
+    fetchAllTransactionsStreamUseCase: sl(),
   ));
 
   sl.registerFactory(() => WithdrawRequestsCubit(

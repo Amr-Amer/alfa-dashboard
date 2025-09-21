@@ -1,11 +1,6 @@
-import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
-import 'package:alfa_dashboard/core/services/global/global_fun.dart';
-import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
-import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_type.dart';
 import 'package:alfa_dashboard/features/user/data/models/user_model.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:flutter/material.dart';
-import 'package:alfa_dashboard/features/notifications/data/models/notification_model.dart';
 
 class AddNotificationDialog extends StatefulWidget {
   final List<UserModel> users;
@@ -83,28 +78,28 @@ class _AddNotificationDialogState extends State<AddNotificationDialog> {
         ElevatedButton(
           onPressed: () async {
             if (_formKey.currentState!.validate() && selectedUser != null) {
-              final amount = double.tryParse(amountController.text) ?? 0;
-              final newBalance = selectedUser!.balance + amount;
-              final currency = selectedUser!.currency ?? 'EGP';
+              // final amount = double.tryParse(amountController.text) ?? 0;
+              // final newBalance = selectedUser!.balance + amount;
+              // final currency = selectedUser!.currency ?? 'EGP';
 
-              final defaultBody =
-                  'تم إضافة ${amount.toStringAsFixed(2)} $currency إلى رصيدك. الرصيد الحالي: ${newBalance.toStringAsFixed(2)} $currency';
+              // final defaultBody =
+              //     'تم إضافة ${amount.toStringAsFixed(2)} $currency إلى رصيدك. الرصيد الحالي: ${newBalance.toStringAsFixed(2)} $currency';
 
-              final newNotification = NotificationModel(
-                id: GlobalFun.generateId(),
-                title: titleController.text.trim(),
-                body: bodyController.text.trim().isEmpty ? defaultBody : bodyController.text.trim(),
-                createdAt: DateTime.now(),
-                read: false,
-                uid: selectedUser!.uid,
-                type: TransactionType.deposit,
-                status: TransactionStatus.pending.name,
-                data: {
-                  FirebaseConstants.amount: amount,
-                  FirebaseConstants.currency: currency,
-                },
-                name: selectedUser!.displayName,
-              );
+              // final newNotification = NotificationModel(
+              //   id: GlobalFun.generateId(),
+              //   title: titleController.text.trim(),
+              //   body: bodyController.text.trim().isEmpty ? defaultBody : bodyController.text.trim(),
+              //   createdAt: DateTime.now(),
+              //   read: false,
+              //   uid: selectedUser!.uid,
+              //   type: TransactionType.deposit,
+              //   status: TransactionStatus.pending.name,
+              //   data: {
+              //     FirebaseConstants.amount: amount,
+              //     FirebaseConstants.currency: currency,
+              //   },
+              //   name: selectedUser!.displayName,
+              // );
 
               // await context.read<NotificationCubit>().createNotification(newNotification);
               // Navigator.pop(context);

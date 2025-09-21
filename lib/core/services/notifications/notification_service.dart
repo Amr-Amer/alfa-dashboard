@@ -40,7 +40,7 @@ class NotificationService {
     required String title,
     required String body,
   }) async {
-    const String serverKey = 'AIzaSyAVxlS3v43b1wfFpMPJp8IKiPMdzs4_Fdg';
+    const String serverKey = 'ecbce92685c68d266f7f5968a80415bc589a1b1c';
 
     final response = await http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
