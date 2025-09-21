@@ -35,7 +35,15 @@ class SideMenu extends StatelessWidget {
             const SizedBox(height: 40),
             Row(
               children: [
-                GradientIcon(icon: Icons.circle, size: 50),
+                // GradientIcon(icon: Icons.circle, size: 50),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage('assets/images/part_logo.png'), fit: BoxFit.cover),
+                  border: Border.all(color: Colors.white),
+                ),),
+                // Image.asset('assets/images/part_logo.png', height: 50, width: 50),
                 const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
