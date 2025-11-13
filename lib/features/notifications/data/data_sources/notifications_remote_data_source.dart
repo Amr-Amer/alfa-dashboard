@@ -3,10 +3,6 @@ import 'package:alfa_dashboard/features/notifications/data/models/notification_m
 import 'package:dartz/dartz.dart';
 
 abstract class NotificationRemoteDataSource {
-  Future<Either<ErrorModel, List<NotificationModel>>> fetchUserNotifications(String uid);
-  Future<Either<ErrorModel, List<NotificationModel>>> fetchAllNotifications();
-  Future<Either<ErrorModel, void>> markNotificationAsRead(String uid, String notificationId);
-  Future<Either<ErrorModel, void>> markAllAsRead(String uid);
   Future<Either<ErrorModel, void>> addNotification(NotificationModel notification);
   Future<Either<ErrorModel, void>> sendNotification(NotificationModel notification);
 }

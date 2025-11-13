@@ -10,28 +10,8 @@ class NotificationRepositoryImpl implements NotificationRepository {
   NotificationRepositoryImpl(this.remoteDataSource);
 
   @override
-  Future<Either<ErrorModel, List<NotificationModel>>> fetchUserNotifications(String uid) {
-    return remoteDataSource.fetchUserNotifications(uid);
-  }
-
-  @override
-  Future<Either<ErrorModel, List<NotificationModel>>> fetchAllNotifications() {
-    return remoteDataSource.fetchAllNotifications();
-  }
-
-  @override
-  Future<Either<ErrorModel, void>> markNotificationAsRead(String uid, String notificationId) {
-    return remoteDataSource.markNotificationAsRead(uid, notificationId);
-  }
-
-  @override
   Future<Either<ErrorModel, void>> sendNotification(NotificationModel notification) {
     return remoteDataSource.sendNotification(notification);
-  }
-
-  @override
-  Future<Either<ErrorModel, void>> markAllAsRead(String uid) {
-    return remoteDataSource.markAllAsRead(uid);
   }
 
   @override

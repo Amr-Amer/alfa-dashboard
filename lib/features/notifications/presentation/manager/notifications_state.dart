@@ -1,4 +1,3 @@
-import 'package:alfa_dashboard/features/notifications/data/models/notification_model.dart';
 
 abstract class NotificationState {}
 
@@ -6,23 +5,18 @@ class NotificationInitial extends NotificationState {}
 
 class NotificationLoading extends NotificationState {}
 
-class NotificationsLoaded extends NotificationState {
-  final List<NotificationModel> notifications;
-  final int unreadCount;
+class NotificationSuccess extends NotificationState {
+  String message;
+  NotificationSuccess(this.message);
+}
 
-  NotificationsLoaded(this.notifications, [int? unreadCount])
-      : unreadCount = unreadCount ?? notifications.where((n) => !n.read).length;
+class NotificationUserSelected extends NotificationState {}
 
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is NotificationsLoaded &&
-              runtimeType == other.runtimeType &&
-              unreadCount == other.unreadCount &&
-              notifications.length == other.notifications.length;
+class NotificationAllUsersSelected extends NotificationState {}
 
-  @override
-  int get hashCode => unreadCount ^ notifications.length;
+class NotificationSentSuccessfully extends NotificationState {
+  final String message;
+  NotificationSentSuccessfully({required this.message});
 }
 
 class NotificationError extends NotificationState {
@@ -30,3 +24,7 @@ class NotificationError extends NotificationState {
 
   NotificationError(this.message);
 }
+
+
+class NotificationUsersLoaded extends NotificationState {}
+

@@ -1,0 +1,64 @@
+import 'package:alfa_dashboard/features/requests/deposit_requests/presentation/manager/deposits_cubit.dart';
+import 'package:alfa_dashboard/features/requests/deposit_requests/presentation/widgets/deposits_search_widget.dart';
+import 'package:alfa_dashboard/utils/app_strings.dart';
+import 'package:alfa_dashboard/utils/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class DepositsSearchFilter extends StatelessWidget {
+  const DepositsSearchFilter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 4,
+          child: DepositsSearchWidget(),
+        ),
+        const SizedBox(width: 12),
+
+        Expanded(
+          flex: 1,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: AppConstants.clrBoxBackground,
+              boxShadow: const [
+                BoxShadow(color: Color(0xFF333333), spreadRadius: 1)
+              ],
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: context.read<DepositsCubit>().selectedStatus,
+                hint: const Text(
+                  AppStrings.status,
+                  style: TextStyle(color: AppConstants.clrSmallText),
+                ),
+                icon: const Icon(Icons.filter_list, size: 20),
+                borderRadius: BorderRadius.circular(12),
+                dropdownColor: AppConstants.clrBoxBackground,
+                style: TextStyle(
+                  color: AppConstants.clrSmallText,),
+                items: const [
+                  DropdownMenuItem(value: 'all', child: Text(AppStrings.all)),
+                  DropdownMenuItem(value: 'completed', child: Text(AppStrings.completed)),
+                  DropdownMenuItem(value: 'pending', child: Text(AppStrings.pending)),
+                  DropdownMenuItem(value: 'failed', child: Text(AppStrings.failed)),
+                  DropdownMenuItem(value: 'canceled', child: Text(AppStrings.cancelled)),
+                ],
+                onChanged: (value) {
+                  if (value != null) {
+                    context.read<DepositsCubit>().filterByStatus(value);
+                  }
+                },
+              ),
+            ),
+          ),
+        ),
+
+      ],
+    );
+  }
+}

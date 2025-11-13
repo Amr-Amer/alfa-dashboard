@@ -22,6 +22,7 @@ class TransactionModel extends TransactionEntity {
     required super.updatedAt,
     required super.adminNote,
     required super.userToken,
+    required super.receiptUrl
   });
 
   factory TransactionModel.fromMap(Map<String, dynamic> map) {
@@ -41,6 +42,7 @@ class TransactionModel extends TransactionEntity {
       updatedAt: (map[FirebaseConstants.updatedAt] as Timestamp).toDate(),
       adminNote: map[FirebaseConstants.adminNote] ?? '',
       userToken: map[FirebaseConstants.fcmToken] ?? '',
+      receiptUrl: map[FirebaseConstants.receiptUrl] ?? '',
     );
   }
 
@@ -60,7 +62,8 @@ class TransactionModel extends TransactionEntity {
       FirebaseConstants.createdAt: Timestamp.fromDate(createdAt),
       FirebaseConstants.updatedAt: Timestamp.fromDate(updatedAt),
       FirebaseConstants.adminNote : adminNote,
-      FirebaseConstants.fcmToken : userToken
+      FirebaseConstants.fcmToken : userToken,
+      FirebaseConstants.receiptUrl : receiptUrl
     };
   }
 
@@ -79,7 +82,8 @@ class TransactionModel extends TransactionEntity {
     DateTime? createdAt,
     DateTime? updatedAt,
     String? adminNote,
-    String? userToken
+    String? userToken,
+    String? receiptUrl
   }) {
     return TransactionModel(
       id: id ?? this.id,
@@ -96,7 +100,8 @@ class TransactionModel extends TransactionEntity {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       adminNote: adminNote ?? this.adminNote,
-      userToken: userToken ?? this.userToken
+      userToken: userToken ?? this.userToken,
+      receiptUrl: receiptUrl ?? this.receiptUrl
     );
   }
 
@@ -123,7 +128,7 @@ class TransactionModel extends TransactionEntity {
       updatedAt: (data[FirebaseConstants.updatedAt] as Timestamp).toDate(),
       adminNote: data[FirebaseConstants.adminNote] ?? '',
       userToken: data[FirebaseConstants.fcmToken] ?? '',
+      receiptUrl: data[FirebaseConstants.receiptUrl] ?? '',
     );
   }
-
 }

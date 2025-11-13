@@ -5,9 +5,9 @@ import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class TransactionsCard extends StatelessWidget {
   TransactionsCard({super.key});
@@ -15,7 +15,6 @@ class TransactionsCard extends StatelessWidget {
   final ScrollController controller = ScrollController();
   final ScrollController controller2 = ScrollController();
   final ValueNotifier<String?> _hoveredRow = ValueNotifier(null);
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +65,7 @@ class TransactionsCard extends StatelessWidget {
                       // buildHeaderCell(Icons.note_alt_outlined, AppStrings.transactionNotes, 1),     // Transaction Notes
                       buildHeaderCell(Icons.av_timer_rounded, AppStrings.transactionTime, 1), // Transaction Time
                       buildHeaderCell(Icons.delete, AppStrings.delete, 1), // Transaction Time
+                      buildHeaderCell(Icons.image, AppStrings.receiptImage, 1), // Transaction Time
                     ],
                   ),
                 ),
@@ -107,7 +107,8 @@ class TransactionsCard extends StatelessWidget {
                   buildDetailsCell(GlobalFun.getStatusAr(transaction.status), 1),
                   buildDetailsCell('${transaction.amount}  ${GlobalFun.getCurrencyAr(transaction.currency)}',1),
                   buildDetailsCell(GlobalFun.formatDate(transaction.createdAt), 1),
-                  buildDeleteCell(transaction.id, 1, context)
+                  buildDeleteCell(transaction.id, 1, context),
+                  buildDetailsCellWithImage(transaction.receiptUrl, 1,context)
                 ],
               ),
             ),
@@ -116,7 +117,6 @@ class TransactionsCard extends StatelessWidget {
       ),
     );
   }
-
 
   Widget buildDetailsCell(String text, int flex) {
     final words = text.trim().split(RegExp(r'\s+'));
@@ -159,27 +159,66 @@ class TransactionsCard extends StatelessWidget {
     );
   }
 
-  Widget buildDetailsCellWithImage(String imagePath, String text, int flex) {
+  Widget buildDetailsCellWithImage(String imageUrl, int flex, BuildContext context) {
     return Expanded(
-        child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        imagePath.endsWith('.svg')
-            ? SvgPicture.asset(
-                imagePath,
-                width: 20,
+      flex: flex,
+      child: Center(
+        child: imageUrl.isEmpty
+            ? const Icon(
+            Icons.image_not_supported, color: AppConstants.clrBigText)
+            : InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  AlertDialog(
+                    backgroundColor: AppConstants.clrWhite,
+                    title: const Text(AppStrings.receiptImage),
+                    content: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      // height: 50,
+                      // width: 50,
+                      // fit: BoxFit.contain,
+                      placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.broken_image, size: 30,
+                          color: AppConstants.clrBigText),
+                    ),
+                    actions: [
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                              AppConstants.clrBoxBackground),
+                        ),
+                        child: const Text(AppStrings.close,style: TextStyle(color: AppConstants.clrBigText),),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+            );
+          },
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.network(
+                imageUrl,
+                height: 40,
+                width: 40,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.broken_image, size: 30,
+                      color: AppConstants.clrGradient3);
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2,));
+                },
               )
-            : Image.asset(
-                imagePath,
-                width: 20,
-              ),
-        SizedBox(width: 5,),
-        Text(
-          text,
-          style: TextStyle(color: AppConstants.clrBigText, fontSize: 13),
-        )
-      ],
-    ));
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildHeaderCell(IconData imagePath, String text, int flex) {

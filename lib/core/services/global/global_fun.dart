@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:alfa_dashboard/core/networking/firebase_constants.dart';
 import 'package:alfa_dashboard/features/notifications/data/models/notification_model.dart';
+import 'package:alfa_dashboard/features/requests/top_up/data/models/topup_model.dart';
 import 'package:alfa_dashboard/features/transaction/data/models/transaction_model.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_method.dart';
 import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
@@ -11,7 +12,6 @@ import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 
 class GlobalFun {
 
@@ -116,15 +116,16 @@ class GlobalFun {
 
   static String generateId() {
     final now = DateTime.now();
-    final random = Random().nextInt(20) + 1;
+    final random = Random().nextInt(900) + 100;
 
     final year = now.year.toString().substring(2);
-    final month = now.month.toString().padLeft(1, '0');
-    final day = now.day.toString().padLeft(1, '0');
-    final hour = now.hour.toString().padLeft(1, '0');
-    final minute = now.minute.toString().padLeft(1, '0');
+    final month = now.month.toString().padLeft(2, '0');
+    final day = now.day.toString().padLeft(2, '0');
+    final hour = now.hour.toString().padLeft(2, '0');
+    final minute = now.minute.toString().padLeft(2, '0');
+    final second = now.second.toString().padLeft(2, '0');
 
-    return 'A-$year$month$day$hour$minute$random';
+    return 'A-$year$month$day$hour$minute$second$random';
   }
 
 
@@ -160,12 +161,17 @@ List<UserModel> get users => usersList;
 List<TransactionModel> withdrawRequestsList = [];
 List<TransactionModel> get withdrawRequests => withdrawRequestsList;
 
+List<TransactionModel> depositRequestsList = [];
+List<TransactionModel> get depositRequests => depositRequestsList;
 
 List<TransactionModel> transactionsList = [];
 List<TransactionModel> get transactions => transactionsList;
 
 List<NotificationModel> notificationsList = [];
 List<NotificationModel> get notifications => notificationsList;
+
+List<TopUpModel> topUpList = [];
+List<TopUpModel> get topUps => topUpList;
 
 
 Widget hSpace (double h) {

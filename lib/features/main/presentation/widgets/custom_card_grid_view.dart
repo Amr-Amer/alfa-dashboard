@@ -1,6 +1,5 @@
 import 'package:alfa_dashboard/core/models/main_card_model.dart';
 import 'package:alfa_dashboard/core/services/global/global_fun.dart';
-import 'package:alfa_dashboard/features/transaction/domain/enums/transaction_status.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_state.dart';
 import 'package:alfa_dashboard/utils/app_strings.dart';
 import 'package:alfa_dashboard/utils/constants.dart';
@@ -28,8 +27,8 @@ class CustomCardGridView extends StatelessWidget {
       builder: (context, state) {
         final totalUsers = users.length;
         final totalTransactions = transactions.length;
-        final totalWithdrawRequests = transactions.where((request) => request.status == TransactionStatus.pending).toList().length;
-        // final totalWithdrawRequests = withdrawRequests.length;
+        final totalWithdraws = withdrawRequests.length;
+        final totalDeposits = depositRequests.length;
 
         final List<MainCardModel> cards = [
           MainCardModel(
@@ -53,10 +52,18 @@ class CustomCardGridView extends StatelessWidget {
             title: AppStrings.totalWithdrawRequests,
             subTitle: AppStrings.withdrawRequests,
             iconData: HugeIcons.strokeRoundedAccess,
-            count: totalWithdrawRequests.toString(),
-            percentage: totalWithdrawRequests == 0 ? '0%' : '100%',
-            color: totalWithdrawRequests.toString().isEmpty ? AppConstants.redColor : AppConstants.greenColor,
-          )
+            count: totalWithdraws.toString(),
+            percentage: totalWithdraws == 0 ? '0%' : '100%',
+            color: totalWithdraws.toString().isEmpty ? AppConstants.redColor : AppConstants.greenColor,
+          ),
+          MainCardModel(
+            title: AppStrings.totalDepositRequests,
+            subTitle: AppStrings.deposit,
+            iconData: HugeIcons.strokeRoundedAccess,
+            count: totalDeposits.toString(),
+            percentage: totalDeposits == 0 ? '0%' : '100%',
+            color: totalDeposits.toString().isEmpty ? AppConstants.redColor : AppConstants.greenColor,
+          ),
         ];
 
         return GridView.builder(

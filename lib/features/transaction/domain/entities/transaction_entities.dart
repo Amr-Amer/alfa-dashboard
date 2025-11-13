@@ -19,6 +19,7 @@ class TransactionEntity extends Equatable {
   final DateTime updatedAt;
   final String adminNote;
   final String userToken;
+  final String receiptUrl;
 
   const TransactionEntity({
     required this.id,
@@ -35,7 +36,8 @@ class TransactionEntity extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.adminNote,
-    required this.userToken
+    required this.userToken,
+    required this.receiptUrl
   });
 
   @override
@@ -54,6 +56,7 @@ class TransactionEntity extends Equatable {
     createdAt,
     updatedAt,
     adminNote,
-    userToken
+    userToken,
+    receiptUrl
   ];
 }

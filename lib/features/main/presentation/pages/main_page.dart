@@ -1,7 +1,8 @@
 import 'package:alfa_dashboard/core/di/injection_container.dart';
+import 'package:alfa_dashboard/features/requests/deposit_requests/presentation/manager/deposits_cubit.dart';
+import 'package:alfa_dashboard/features/requests/withdraw_requests/presentation/manager/withdraws_cubit.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/manager/transaction_cubit.dart';
 import 'package:alfa_dashboard/features/user/presentation/manager/user_cubit.dart';
-import 'package:alfa_dashboard/features/withdraw_requests/presentation/manager/withdraw_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/features/main/presentation/widgets/custom_card_grid_view.dart';
@@ -18,9 +19,10 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<UserCubit>()..fetchAllUsersStream(),),
-        BlocProvider(create: (context) => sl<TransactionCubit>()..fetchAllTransactionsStream(),),
-        BlocProvider(create: (context) => sl<WithdrawRequestsCubit>()..setupWithdrawRequestsStream(),),
+        BlocProvider(create: (_) => sl<UserCubit>()..fetchAllUsersStream(),),
+        BlocProvider(create: (_) => sl<TransactionCubit>()..fetchAllTransactionsStream(),),
+        BlocProvider(create: (_) => sl<WithdrawsCubit>()..fetchWithdrawsStream(),),
+        BlocProvider(create: (_) => sl<DepositsCubit>()..fetchDepositsStream(),),
       ],
   child: SizedBox(
       height: MediaQuery.of(context).size.height,

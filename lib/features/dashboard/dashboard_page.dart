@@ -1,7 +1,8 @@
 import 'package:alfa_dashboard/features/notifications/presentation/pages/notifications_page.dart';
+import 'package:alfa_dashboard/features/requests/deposit_requests/presentation/pages/deposits_page.dart';
+import 'package:alfa_dashboard/features/requests/withdraw_requests/presentation/pages/withdraws_page.dart';
 import 'package:alfa_dashboard/features/transaction/presentation/pages/transaction_page.dart';
 import 'package:alfa_dashboard/features/user/presentation/pages/users_page.dart';
-import 'package:alfa_dashboard/features/withdraw_requests/presentation/pages/withdraw_requests_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:alfa_dashboard/responsive.dart';
 import 'package:alfa_dashboard/features/main/presentation/pages/main_page.dart';
@@ -23,7 +24,8 @@ class _DashboardPageState extends State<DashboardPage> {
     MainPage(scaffoldKey: GlobalKey()),
     UsersPage(scaffoldKey: GlobalKey()),
     TransactionsPage(scaffoldKey: GlobalKey()),
-    WithdrawRequestsScreen( scaffoldKey: GlobalKey(),),
+    WithdrawsPage(scaffoldKey: GlobalKey()),
+    DepositsPage(scaffoldKey: GlobalKey()),
     NotificationsPage(scaffoldKey: GlobalKey()),
   ];
 

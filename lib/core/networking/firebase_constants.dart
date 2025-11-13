@@ -3,6 +3,7 @@ abstract class FirebaseConstants {
   static const String usersCollection = "users";
   static const String transCollection = "transactions";
   static const String notificationsCollection = "notifications";
+  static const String topupsCollection = "topups";
 
   //TODO: User
   static const String uId = "uId";
@@ -47,10 +48,11 @@ abstract class FirebaseConstants {
   static const String wallet = "wallet";
   static const String egyptCurrency = "EGP";
   static const String transType = "type";
+  static const String receiptUrl = "receiptUrl";
 
   //TODO: Notification
   // Notifications fields
-  static const String notificationId = "id";
+  static const String id = "id";
   static const String notificationUid = "uid";
   static const String notificationTitle = "title";
   static const String notificationBody = "body";
@@ -59,6 +61,12 @@ abstract class FirebaseConstants {
   static const String notificationRead = "read";
   static const String notificationStatus = "status";
 
+  //TODO: TopUp
+  static const String topUpId = "topUpId";
+  static const String userId = "userId";
+  static const String channel = "channel";
+  static const String transferRef = "transferRef";
+  static const String transferAt = "transferAt";
 
   //TODO: General
   static const String createdAt = "createdAt";

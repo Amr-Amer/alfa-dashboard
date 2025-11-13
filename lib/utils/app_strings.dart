@@ -4,6 +4,7 @@ class AppStrings {
   static const String users = 'المستخدمين';
   static const String withdrawRequests = 'طلبات السحب';
   static const String totalWithdrawRequests = ' عدد طلبات السحب';
+  static const String totalDepositRequests = ' عدد طلبات الإيداع';
   static const String settings = 'الاعدادات';
   static const String logOut = 'تسجيل الخروج';
   static const String numbers = 'الرقم';
@@ -113,4 +114,31 @@ class AppStrings {
   static const String hasFcmToken = "لديه توكين الأشعارات";
   static const String yes = "نعم";
   static const String no = "لأ";
+  static const String receiptImage = "صورة الإيصال";
+  static const String depositRequests = 'طلبات الايداع';
+  static const String bank = 'بنك';
+  static const String instaPay = 'انستاباى';
+  static const String vodafoneCash = 'فودافون كاش';
+  static const String orangeCash = 'أورانج كاش';
+  static const String etisalatCash = 'أورانج كاش';
+  static const String wePay = 'وى باى';
+  static const String totalTopUps = 'اجمالى توب أب';
+  static const String topUps = ' توب أب';
+  static const String withdrawsIsEmpty = 'قائمة طلبات السحب فارغه !';
+  static const String depositsIsEmpty = 'قائمة طلبات الإيداع فارغه !';
+  static const String updateDepositStatus = 'تغير حاله طلب الإيداع';
+  static const String bodyRequired = 'ادخل محتوى الأشعار';
+  static const String send = 'ارسال';
+  static const String clear = 'مسح';
+  static const String sendToAll = 'أرسال الى الجميع';
+  static const String sendToUser = 'أرسال الى مستخدم';
+  static const String bodyHint = 'تواصل مع المستخدين';
+
+  static const String notificationContent = 'تواصل مع المستخدين';
+  static const String sendingTo = 'ارسال الى';
+  static const String sendingToAllUsers = ' ارسال الى جميع المستخدين';
+  static const String allUsers = 'جميع المستخدمين';
+  static const String selectRecipient = 'جميع المستخدمين';
+  static const String sendNotification = 'ارسال اشعار';
+  static const String notificationTitleFromAdmin = 'اشعار من الأدمن ';
 }

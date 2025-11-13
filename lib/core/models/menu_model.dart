@@ -13,7 +13,8 @@ List<MenuModel> menu = [
   MenuModel(icon: Icons.supervised_user_circle_outlined, title: AppStrings.users),
   MenuModel(icon: Icons.sync_alt_rounded, title: AppStrings.transactions),
   MenuModel(icon: Icons.account_balance_wallet, title: AppStrings.withdrawRequests),
-  // MenuModel(icon: Icons.notifications_on_rounded, title: AppStrings.notifications),
+  MenuModel(icon: Icons.account_balance_wallet, title: AppStrings.depositRequests),
+  MenuModel(icon: Icons.notifications_on_rounded, title: AppStrings.notifications),
   // MenuModel(icon: Icons.payment_rounded, title: AppStrings.payroll),
 ];
 

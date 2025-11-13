@@ -3,7 +3,10 @@ enum TransactionStatus {
   completed,
   failed,
   cancelled,
+  rejected,
+  general,
 }
+
 
 extension TransactionStatusExt on TransactionStatus {
   String get name => toString().split('.').last;

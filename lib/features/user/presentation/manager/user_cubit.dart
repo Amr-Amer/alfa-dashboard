@@ -19,14 +19,14 @@ class UserCubit extends Cubit<UserState> {
   final UpdateUserBalanceUseCase updateUserBalanceUseCase;
   final DeleteUserUseCase deleteUserUseCase;
   final FetchAllUSersStreamUseCase  fetchAllUSersStreamUseCase;
-  UserCubit({
-    required this.fetchUserDataUseCase,
-    required this.updateUserUseCase,
-    required this.fetchAllUSersUseCase,
-    required this.updateUserBalanceUseCase,
-    required this.deleteUserUseCase,
-    required this.fetchAllUSersStreamUseCase
-  }) : super(UserInitial()) {
+  UserCubit(
+    this.fetchUserDataUseCase,
+    this.updateUserUseCase,
+    this.fetchAllUSersUseCase,
+    this.updateUserBalanceUseCase,
+    this.deleteUserUseCase,
+    this.fetchAllUSersStreamUseCase
+  ) : super(UserInitial()) {
     fetchAllUsersStream();
     // fetchUserData();
   }

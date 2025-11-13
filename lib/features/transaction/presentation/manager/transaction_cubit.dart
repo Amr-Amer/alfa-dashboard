@@ -15,12 +15,14 @@ class TransactionCubit extends Cubit<TransactionState> {
   final DeleteTransactionUseCase deleteTransactionUseCase;
   final FetchAllTransactionsStreamUseCase fetchAllTransactionsStreamUseCase;
 
-  TransactionCubit({
-    required this.fetchUserTransactionUseCase,
-    required this.fetchAllTransactionsUseCase,
-    required this.deleteTransactionUseCase,
-    required this.fetchAllTransactionsStreamUseCase})
-      : super(TransactionInitial()) ;
+  TransactionCubit(
+     this.fetchUserTransactionUseCase,
+      this.fetchAllTransactionsUseCase,
+      this.deleteTransactionUseCase,
+      this.fetchAllTransactionsStreamUseCase)
+      : super(TransactionInitial()){
+    fetchAllTransactionsStream();
+  }
 
   String selectedStatus = 'all';
   String selectedType = 'all';
@@ -39,7 +41,7 @@ class TransactionCubit extends Cubit<TransactionState> {
                 transactionsList = result;
             emit(TransactionsLoaded(transactions));
                 if (kDebugMode) {
-                  print("transaction data.................... ${transactions.length}");
+                  print("transaction data.................... $transactions");
                 }
           },
         );

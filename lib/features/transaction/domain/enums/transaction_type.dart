@@ -1,4 +1,4 @@
-enum TransactionType { deposit, withdraw }
+enum TransactionType { deposit, withdraw, withdrawalStatusUpdate, transfer, depositStatusUpdate, general }
 
 extension TransactionTypeExt on TransactionType {
   String get name => toString().split('.').last;
